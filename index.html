@@ -21,17 +21,14 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
+  body { font-family: 'Nunito', sans-serif; background: var(--fondo); color: var(--oscuro); overflow-x: hidden; }
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--fondo);
-    color: var(--oscuro);
-    overflow-x: hidden;
-  }
+  /* ─── PAGE TRANSITIONS ─── */
+  .page { display: none; opacity: 0; transform: translateY(18px); transition: opacity 0.45s ease, transform 0.45s ease; }
+  .page.active { display: block; opacity: 1; transform: translateY(0); }
 
-  /* ─── PATTERNS & TEXTURES ─── */
+  /* ─── CONFETTI BG ─── */
   .confetti-bg {
     background-image:
       radial-gradient(circle at 15% 25%, rgba(245,196,0,0.12) 0%, transparent 40%),
@@ -44,140 +41,73 @@
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5%;
-    height: 72px;
+    padding: 0 5%; height: 72px;
     background: rgba(253,250,243,0.92);
     backdrop-filter: blur(14px);
     border-bottom: 2px solid transparent;
     transition: border-color 0.3s, box-shadow 0.3s;
   }
-  nav.scrolled {
-    border-bottom-color: var(--amarillo);
-    box-shadow: 0 4px 24px rgba(26,18,16,0.10);
-  }
+  nav.scrolled { border-bottom-color: var(--amarillo); box-shadow: 0 4px 24px rgba(26,18,16,0.10); }
 
-  .nav-logo {
-    display: flex; align-items: center; gap: 10px;
-    text-decoration: none;
-  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
   .logo-mark {
-    width: 44px; height: 44px;
-    background: var(--rojo);
-    border-radius: 50%;
+    width: 44px; height: 44px; background: var(--rojo); border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    box-shadow: 3px 3px 0 var(--amarillo);
-    flex-shrink: 0;
-    transition: transform 0.3s;
+    font-size: 22px; box-shadow: 3px 3px 0 var(--amarillo); flex-shrink: 0; transition: transform 0.3s;
   }
   .nav-logo:hover .logo-mark { transform: rotate(-8deg) scale(1.07); }
   .logo-text { line-height: 1.1; }
-  .logo-text strong {
-    display: block; font-family: 'Playfair Display', serif;
-    font-size: 1.15rem; color: var(--oscuro);
-  }
+  .logo-text strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--oscuro); }
   .logo-text span { font-size: 0.72rem; color: var(--gris); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
 
-  .nav-links {
-    display: flex; gap: 2px; list-style: none;
-    align-items: center;
-  }
+  .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
   .nav-links a {
     text-decoration: none; color: var(--oscuro);
     font-weight: 700; font-size: 0.88rem;
     padding: 8px 14px; border-radius: 8px;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s; cursor: pointer;
+    background: none; border: none; font-family: 'Nunito', sans-serif;
   }
   .nav-links a:hover { background: var(--amarillo); color: var(--oscuro); }
+  .nav-links a.active-nav { background: var(--amarillo); }
   .nav-links .btn-nav {
-    background: var(--rojo); color: #fff !important;
-    border-radius: 50px; padding: 9px 20px;
-    box-shadow: 3px 3px 0 var(--oscuro);
-    transition: transform 0.15s, box-shadow 0.15s;
+    background: var(--rojo); color: #fff !important; border-radius: 50px; padding: 9px 20px;
+    box-shadow: 3px 3px 0 var(--oscuro); transition: transform 0.15s, box-shadow 0.15s;
   }
   .nav-links .btn-nav:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--oscuro); background: var(--rojo) !important; }
 
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; }
   .hamburger span { width: 26px; height: 3px; background: var(--oscuro); border-radius: 2px; transition: 0.3s; display: block; }
-
   .mobile-menu {
-    display: none;
-    position: fixed; top: 72px; left: 0; right: 0;
-    background: var(--fondo); z-index: 99;
-    padding: 16px 5% 24px;
-    border-bottom: 3px solid var(--amarillo);
-    flex-direction: column; gap: 4px;
+    display: none; position: fixed; top: 72px; left: 0; right: 0;
+    background: var(--fondo); z-index: 99; padding: 16px 5% 24px;
+    border-bottom: 3px solid var(--amarillo); flex-direction: column; gap: 4px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.1);
   }
   .mobile-menu.open { display: flex; }
   .mobile-menu a {
-    text-decoration: none; color: var(--oscuro);
-    font-weight: 700; font-size: 1rem;
-    padding: 12px 16px; border-radius: 10px;
-    transition: background 0.2s;
+    text-decoration: none; color: var(--oscuro); font-weight: 700; font-size: 1rem;
+    padding: 12px 16px; border-radius: 10px; transition: background 0.2s; cursor: pointer;
+    background: none; border: none; font-family: 'Nunito', sans-serif; text-align: left;
   }
   .mobile-menu a:hover { background: var(--amarillo); }
 
-  /* ─── HERO ─── */
-  #inicio {
-    min-height: 100vh;
-    padding-top: 72px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 40px;
-    padding-inline: 5%;
-    overflow: hidden;
-    position: relative;
-    background: var(--fondo);
-  }
-  #inicio::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 60% 70% at 80% 50%, rgba(245,196,0,0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(244,121,32,0.13) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  .hero-content { position: relative; z-index: 2; }
-  .hero-badge {
+  /* ─── SECTION COMMONS ─── */
+  section { padding: 90px 5%; }
+  .section-tag {
     display: inline-flex; align-items: center; gap: 8px;
-    background: var(--amarillo); color: var(--oscuro);
-    padding: 6px 16px; border-radius: 50px;
-    font-weight: 800; font-size: 0.78rem; letter-spacing: 0.05em;
-    text-transform: uppercase; margin-bottom: 20px;
-    border: 2px solid var(--oscuro);
-    box-shadow: 3px 3px 0 var(--oscuro);
+    font-weight: 800; font-size: 0.78rem; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--naranja); margin-bottom: 10px;
   }
-
-  .hero-title {
+  .section-tag::before { content: '◆'; font-size: 0.6rem; }
+  .section-title {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-    font-weight: 900;
-    line-height: 1.1;
-    color: var(--oscuro);
-    margin-bottom: 20px;
+    font-size: clamp(1.9rem, 3.5vw, 2.9rem);
+    font-weight: 900; line-height: 1.15; margin-bottom: 14px;
   }
-  .hero-title .highlight {
-    color: var(--rojo);
-    position: relative;
-  }
-  .hero-title .highlight::after {
-    content: '';
-    position: absolute; left: 0; bottom: -4px; right: 0; height: 5px;
-    background: var(--amarillo);
-    border-radius: 3px;
-  }
+  .section-sub { font-size: 1.05rem; color: var(--gris); max-width: 600px; line-height: 1.65; margin-bottom: 48px; }
 
-  .hero-sub {
-    font-size: 1.1rem; color: var(--gris);
-    line-height: 1.7; margin-bottom: 36px;
-    max-width: 480px;
-  }
-
-  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-
+  /* ─── BUTTONS ─── */
   .btn-primary {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--rojo); color: #fff;
@@ -186,117 +116,83 @@
     text-decoration: none; border: none; cursor: pointer;
     box-shadow: 4px 4px 0 var(--oscuro);
     transition: transform 0.15s, box-shadow 0.15s;
+    font-family: 'Nunito', sans-serif;
   }
   .btn-primary:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--oscuro); }
-
   .btn-secondary {
     display: inline-flex; align-items: center; gap: 8px;
     background: transparent; color: var(--oscuro);
     font-weight: 800; font-size: 1rem;
     padding: 14px 28px; border-radius: 50px;
     text-decoration: none; border: 2.5px solid var(--oscuro); cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s; font-family: 'Nunito', sans-serif;
   }
   .btn-secondary:hover { background: var(--amarillo); }
 
-  .hero-stats {
-    display: flex; gap: 28px; margin-top: 40px;
-    padding-top: 28px; border-top: 2px solid rgba(26,18,16,0.10);
-  }
-  .hstat { text-align: center; }
-  .hstat strong {
-    display: block; font-family: 'Playfair Display', serif;
-    font-size: 1.9rem; color: var(--azul);
-  }
-  .hstat span { font-size: 0.8rem; font-weight: 700; color: var(--gris); text-transform: uppercase; letter-spacing: 0.04em; }
-
-  /* Hero visual side */
-  .hero-visual {
-    position: relative; z-index: 2;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  }
-  .hero-card {
-    border-radius: 20px; overflow: hidden;
-    position: relative; aspect-ratio: 3/4;
-    background: var(--gris-claro);
-    border: 3px solid var(--oscuro);
-    box-shadow: 6px 6px 0 var(--oscuro);
-    transition: transform 0.3s;
-  }
-  .hero-card:hover { transform: translate(-4px,-4px); }
-  .hero-card:nth-child(2) { margin-top: 40px; }
-  .hero-card img { width: 100%; height: 100%; object-fit: cover; }
-  .hero-card .card-label {
-    position: absolute; bottom: 12px; left: 12px; right: 12px;
-    background: rgba(26,18,16,0.82); color: #fff;
-    padding: 8px 12px; border-radius: 10px;
-    font-size: 0.82rem; font-weight: 700;
-    backdrop-filter: blur(6px);
-  }
-  .hero-card .card-cat {
-    font-size: 0.72rem; color: var(--amarillo);
-    text-transform: uppercase; letter-spacing: 0.05em;
+  /* ─── STRIPE DIVIDER ─── */
+  .stripe-divider {
+    height: 6px;
+    background: repeating-linear-gradient(90deg,
+      var(--amarillo) 0, var(--amarillo) 25%,
+      var(--rojo) 25%, var(--rojo) 50%,
+      var(--azul) 50%, var(--azul) 75%,
+      var(--naranja) 75%, var(--naranja) 100%);
   }
 
-  /* ─── SECTION COMMONS ─── */
-  section { padding: 90px 5%; }
-  .section-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-weight: 800; font-size: 0.78rem; text-transform: uppercase;
-    letter-spacing: 0.07em; color: var(--naranja);
-    margin-bottom: 10px;
+  /* ─── CTA BANNER ─── */
+  .cta-banner {
+    background: var(--amarillo); padding: 56px 5%;
+    text-align: center; border-top: 3px solid var(--oscuro); border-bottom: 3px solid var(--oscuro);
   }
-  .section-tag::before { content: '◆'; font-size: 0.6rem; }
-  .section-title {
+  .cta-banner h2 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.9rem, 3.5vw, 2.9rem);
-    font-weight: 900; line-height: 1.15;
-    margin-bottom: 14px;
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 900; margin-bottom: 10px; color: var(--oscuro);
   }
-  .section-sub {
-    font-size: 1.05rem; color: var(--gris);
-    max-width: 600px; line-height: 1.65; margin-bottom: 48px;
-  }
+  .cta-banner p { color: rgba(26,18,16,0.70); margin-bottom: 28px; font-size: 1.05rem; }
+  .cta-banner .btn-primary { background: var(--oscuro); box-shadow: 4px 4px 0 var(--rojo); }
+  .cta-banner .btn-primary:hover { box-shadow: 7px 7px 0 var(--rojo); }
 
-  /* ─── FILTERS ─── */
-  .filter-bar {
-    display: flex; gap: 10px; flex-wrap: wrap;
-    margin-bottom: 36px;
+  /* ─── SCROLL ANIMATIONS ─── */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in-left { opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in-left.visible { opacity: 1; transform: translateX(0); }
+  .fade-in-right { opacity: 0; transform: translateX(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-in-right.visible { opacity: 1; transform: translateX(0); }
+
+  /* ─── IMG PLACEHOLDER ─── */
+  .img-placeholder {
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px;
+    font-size: 3rem; color: rgba(26,18,16,0.3);
   }
+  .img-placeholder span { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .dark-placeholder { color: rgba(255,255,255,0.3); }
+
+  /* ─── FILTER BAR ─── */
+  .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
   .filter-btn {
     padding: 8px 18px; border-radius: 50px;
     font-weight: 700; font-size: 0.88rem;
     cursor: pointer; border: 2px solid var(--oscuro);
     background: transparent; color: var(--oscuro);
     transition: background 0.15s, color 0.15s, transform 0.15s;
+    font-family: 'Nunito', sans-serif;
   }
-  .filter-btn:hover, .filter-btn.active {
-    background: var(--oscuro); color: #fff;
-    transform: translate(-2px,-2px);
-  }
+  .filter-btn:hover, .filter-btn.active { background: var(--oscuro); color: #fff; transform: translate(-2px,-2px); }
   .filter-btn.active { box-shadow: 3px 3px 0 var(--naranja); }
 
   /* ─── TALENT CARDS ─── */
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-    gap: 24px;
-  }
-
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px; }
   .talent-card {
     background: #fff; border: 2.5px solid var(--oscuro);
     border-radius: 20px; overflow: hidden;
     box-shadow: 5px 5px 0 var(--oscuro);
-    transition: transform 0.25s, box-shadow 0.25s;
-    cursor: pointer;
+    transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
   }
   .talent-card:hover { transform: translate(-5px,-5px); box-shadow: 10px 10px 0 var(--oscuro); }
-
-  .tc-img {
-    width: 100%; aspect-ratio: 4/3; object-fit: cover;
-    background: var(--gris-claro);
-    display: block;
-  }
+  .tc-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; background: var(--gris-claro); display: block; }
   .tc-body { padding: 18px; }
   .tc-cat {
     display: inline-block; padding: 3px 12px; border-radius: 50px;
@@ -307,240 +203,96 @@
   .cat-musico   { background: var(--rojo); color: #fff; }
   .cat-bailarin { background: var(--naranja); color: #fff; }
   .cat-gestor   { background: var(--azul); color: #fff; }
-
-  .tc-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem; font-weight: 700;
-    margin-bottom: 6px; color: var(--oscuro);
-  }
+  .tc-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; color: var(--oscuro); }
   .tc-desc { font-size: 0.88rem; color: var(--gris); line-height: 1.55; margin-bottom: 14px; }
-  .tc-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    padding-top: 12px; border-top: 1.5px dashed rgba(26,18,16,0.12);
-  }
+  .tc-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1.5px dashed rgba(26,18,16,0.12); }
   .tc-rating { font-size: 0.84rem; font-weight: 700; color: var(--naranja); }
   .btn-ver {
     background: var(--oscuro); color: #fff;
     padding: 7px 16px; border-radius: 50px;
     font-size: 0.82rem; font-weight: 800;
     text-decoration: none; border: none; cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s; font-family: 'Nunito', sans-serif;
   }
   .btn-ver:hover { background: var(--rojo); }
 
   /* ─── EVENTS ─── */
-  #eventos { background: var(--oscuro); }
-  #eventos .section-tag { color: var(--amarillo); }
-  #eventos .section-title { color: #fff; }
-  #eventos .section-sub { color: rgba(255,255,255,0.65); }
-
-  .events-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 22px;
-  }
-  .event-card {
-    background: rgba(255,255,255,0.06);
-    border: 2px solid rgba(255,255,255,0.15);
-    border-radius: 20px; overflow: hidden;
-    transition: transform 0.25s, border-color 0.25s;
-  }
+  .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
+  .event-card { background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.15); border-radius: 20px; overflow: hidden; transition: transform 0.25s, border-color 0.25s; }
   .event-card:hover { transform: translateY(-6px); border-color: var(--amarillo); }
-  .event-img {
-    width: 100%; aspect-ratio: 16/9; object-fit: cover;
-    display: block; background: #2a2020;
-  }
+  .event-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #2a2020; }
   .event-body { padding: 20px; }
-  .event-date {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--amarillo); font-size: 0.8rem; font-weight: 800;
-    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px;
-  }
-  .event-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem; color: #fff; font-weight: 700;
-    margin-bottom: 8px;
-  }
+  .event-date { display: inline-flex; align-items: center; gap: 8px; color: var(--amarillo); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .event-name { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: #fff; font-weight: 700; margin-bottom: 8px; }
   .event-loc { font-size: 0.85rem; color: rgba(255,255,255,0.55); margin-bottom: 10px; }
   .event-desc { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.55; }
-  .event-footer {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-top: 16px; padding-top: 14px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-  }
-  .event-tag {
-    padding: 4px 12px; border-radius: 50px;
-    font-size: 0.74rem; font-weight: 800;
-    background: var(--naranja); color: #fff;
-  }
-  .btn-event {
-    color: var(--amarillo); font-weight: 800; font-size: 0.85rem;
-    text-decoration: none; background: none; border: none; cursor: pointer;
-  }
+  .event-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); }
+  .event-tag { padding: 4px 12px; border-radius: 50px; font-size: 0.74rem; font-weight: 800; background: var(--naranja); color: #fff; }
+  .btn-event { color: var(--amarillo); font-weight: 800; font-size: 0.85rem; text-decoration: none; background: none; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; }
   .btn-event:hover { text-decoration: underline; }
 
-  /* ─── CULTURA ─── */
-  #cultura { background: var(--gris-claro); }
-
-  .cultura-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 22px;
-  }
-  .cultura-featured {
-    grid-row: 1 / 3;
-    border-radius: 20px; overflow: hidden;
-    background: #fff; border: 2.5px solid var(--oscuro);
-    box-shadow: 6px 6px 0 var(--oscuro);
-    transition: transform 0.25s;
-  }
-  .cultura-featured:hover { transform: translate(-4px,-4px); }
-  .cultura-item {
-    border-radius: 16px; overflow: hidden;
+  /* ─── TESTIMONIOS ─── */
+  .testimonios-wrap { overflow: hidden; position: relative; }
+  .testimonios-track { display: flex; gap: 22px; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+  .testimonio-card {
+    min-width: 340px; flex-shrink: 0;
     background: #fff; border: 2px solid var(--oscuro);
-    box-shadow: 4px 4px 0 var(--oscuro);
-    transition: transform 0.25s;
+    border-radius: 20px; padding: 28px;
+    box-shadow: 5px 5px 0 var(--oscuro); position: relative;
   }
-  .cultura-item:hover { transform: translate(-3px,-3px); }
-  .ci-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--gris-claro); }
-  .ci-body { padding: 16px; }
-  .ci-tag {
-    display: inline-block; padding: 3px 12px; border-radius: 50px;
-    font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.04em; margin-bottom: 8px;
-    background: var(--azul); color: #fff;
+  .testimonio-card::before {
+    content: '"'; position: absolute; top: 16px; right: 20px;
+    font-family: 'Playfair Display', serif; font-size: 5rem;
+    color: var(--amarillo); line-height: 1; opacity: 0.7;
   }
-  .ci-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem; font-weight: 700; color: var(--oscuro);
-    margin-bottom: 6px; line-height: 1.3;
+  .t-text { font-size: 0.98rem; line-height: 1.7; color: var(--oscuro); margin-bottom: 20px; }
+  .t-author { display: flex; align-items: center; gap: 12px; }
+  .t-avatar {
+    width: 48px; height: 48px; border-radius: 50%; background: var(--gris-claro);
+    border: 2px solid var(--oscuro); font-size: 1.4rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-  .ci-sub { font-size: 0.84rem; color: var(--gris); line-height: 1.5; }
-  .cf-img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; background: var(--gris-claro); }
-  .cf-body { padding: 24px; }
-  .cf-tag {
-    display: inline-block; padding: 4px 14px; border-radius: 50px;
-    font-size: 0.78rem; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.05em; margin-bottom: 12px;
-    background: var(--rojo); color: #fff;
+  .t-info strong { display: block; font-size: 0.92rem; font-weight: 800; }
+  .t-info span { font-size: 0.8rem; color: var(--gris); }
+  .t-stars { color: var(--amarillo); font-size: 0.9rem; margin-top: 4px; }
+  .carousel-controls { display: flex; gap: 12px; margin-top: 28px; }
+  .car-btn {
+    width: 48px; height: 48px; border-radius: 50%; border: 2.5px solid var(--oscuro);
+    background: transparent; cursor: pointer; font-size: 1.3rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s; font-weight: 700;
   }
-  .cf-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; font-weight: 900; color: var(--oscuro);
-    margin-bottom: 10px; line-height: 1.25;
-  }
-  .cf-sub { font-size: 0.92rem; color: var(--gris); line-height: 1.65; margin-bottom: 16px; }
-  .btn-leer {
-    display: inline-flex; align-items: center; gap: 8px;
-    color: var(--rojo); font-weight: 800; font-size: 0.9rem;
-    text-decoration: none; background: none; border: none; cursor: pointer;
-    padding: 0;
-  }
-  .btn-leer:hover { text-decoration: underline; }
+  .car-btn:hover, .car-btn.active { background: var(--oscuro); color: #fff; }
 
   /* ─── IMPACTO ─── */
-  #impacto {
+  .impacto-section {
     background: linear-gradient(135deg, var(--azul) 0%, #0d3278 100%);
     position: relative; overflow: hidden;
   }
-  #impacto::before {
-    content: '';
-    position: absolute; inset: 0;
+  .impacto-section::before {
+    content: ''; position: absolute; inset: 0;
     background-image:
       radial-gradient(circle at 20% 50%, rgba(245,196,0,0.15) 0%, transparent 40%),
       radial-gradient(circle at 80% 30%, rgba(244,121,32,0.12) 0%, transparent 35%);
     pointer-events: none;
   }
-  #impacto .section-tag { color: var(--amarillo); }
-  #impacto .section-title { color: #fff; }
-  #impacto .section-sub { color: rgba(255,255,255,0.70); }
-
-  .impacto-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px; margin-top: 20px;
-  }
+  .impacto-section .section-tag { color: var(--amarillo); }
+  .impacto-section .section-title { color: #fff; }
+  .impacto-section .section-sub { color: rgba(255,255,255,0.70); }
+  .impacto-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 20px; }
   .impacto-card {
-    background: rgba(255,255,255,0.09);
-    border: 1.5px solid rgba(255,255,255,0.20);
+    background: rgba(255,255,255,0.09); border: 1.5px solid rgba(255,255,255,0.20);
     border-radius: 20px; padding: 32px 24px; text-align: center;
-    transition: transform 0.25s, background 0.25s;
-    position: relative;
+    transition: transform 0.25s, background 0.25s; position: relative;
   }
-  .impacto-card:hover {
-    transform: translateY(-6px);
-    background: rgba(255,255,255,0.15);
-  }
+  .impacto-card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.15); }
   .impacto-icon { font-size: 2.8rem; margin-bottom: 14px; display: block; }
-  .impacto-num {
-    font-family: 'Playfair Display', serif;
-    font-size: 3rem; font-weight: 900;
-    color: var(--amarillo); display: block; line-height: 1;
-    margin-bottom: 6px;
-  }
+  .impacto-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; color: var(--amarillo); display: block; line-height: 1; margin-bottom: 6px; }
   .impacto-label { font-size: 0.88rem; font-weight: 700; color: rgba(255,255,255,0.80); text-transform: uppercase; letter-spacing: 0.05em; }
 
-  /* ─── TESTIMONIOS ─── */
-  #testimonios { background: var(--fondo); }
-
-  .testimonios-wrap {
-    overflow: hidden; position: relative;
-  }
-  .testimonios-track {
-    display: flex; gap: 22px;
-    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
-  }
-  .testimonio-card {
-    min-width: 340px; flex-shrink: 0;
-    background: #fff; border: 2px solid var(--oscuro);
-    border-radius: 20px; padding: 28px;
-    box-shadow: 5px 5px 0 var(--oscuro);
-    position: relative;
-  }
-  .testimonio-card::before {
-    content: '"';
-    position: absolute; top: 16px; right: 20px;
-    font-family: 'Playfair Display', serif;
-    font-size: 5rem; color: var(--amarillo);
-    line-height: 1; opacity: 0.7;
-  }
-  .t-text { font-size: 0.98rem; line-height: 1.7; color: var(--oscuro); margin-bottom: 20px; }
-  .t-author { display: flex; align-items: center; gap: 12px; }
-  .t-avatar {
-    width: 48px; height: 48px; border-radius: 50%;
-    object-fit: cover; background: var(--gris-claro);
-    border: 2px solid var(--oscuro);
-    font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .t-info strong { display: block; font-size: 0.92rem; font-weight: 800; }
-  .t-info span { font-size: 0.8rem; color: var(--gris); }
-  .t-stars { color: var(--amarillo); font-size: 0.9rem; margin-top: 4px; }
-
-  .carousel-controls { display: flex; gap: 12px; margin-top: 28px; }
-  .car-btn {
-    width: 48px; height: 48px; border-radius: 50%;
-    border: 2.5px solid var(--oscuro); background: transparent;
-    cursor: pointer; font-size: 1.3rem;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, color 0.2s;
-    font-weight: 700;
-  }
-  .car-btn:hover { background: var(--oscuro); color: #fff; }
-  .car-btn.active { background: var(--oscuro); color: #fff; }
-
   /* ─── FOOTER ─── */
-  footer {
-    background: var(--oscuro); color: #fff;
-    padding: 60px 5% 28px;
-  }
-  .footer-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.4fr;
-    gap: 40px; margin-bottom: 48px;
-  }
-  .footer-brand .logo-mark { margin-bottom: 14px; }
+  footer { background: var(--oscuro); color: #fff; padding: 60px 5% 28px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 40px; margin-bottom: 48px; }
   .footer-brand p { font-size: 0.9rem; color: rgba(255,255,255,0.60); line-height: 1.65; max-width: 300px; }
   .footer-social { display: flex; gap: 10px; margin-top: 20px; }
   .social-btn {
@@ -551,25 +303,1471 @@
     transition: background 0.2s;
   }
   .social-btn:hover { background: var(--rojo); }
-
-  footer h4 {
-    font-size: 0.85rem; font-weight: 800; text-transform: uppercase;
-    letter-spacing: 0.07em; color: var(--amarillo);
-    margin-bottom: 18px;
-  }
+  footer h4 { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--amarillo); margin-bottom: 18px; }
   footer ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  footer ul li a {
+  footer ul li a, footer ul li button {
     color: rgba(255,255,255,0.60); text-decoration: none;
-    font-size: 0.9rem; font-weight: 600;
-    transition: color 0.2s;
+    font-size: 0.9rem; font-weight: 600; transition: color 0.2s;
+    background: none; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; text-align: left; padding: 0;
   }
-  footer ul li a:hover { color: #fff; }
-
-  .footer-contact p {
-    font-size: 0.88rem; color: rgba(255,255,255,0.60);
-    line-height: 1.7; margin-bottom: 6px;
-  }
+  footer ul li a:hover, footer ul li button:hover { color: #fff; }
+  .footer-contact p { font-size: 0.88rem; color: rgba(255,255,255,0.60); line-height: 1.7; margin-bottom: 6px; }
   .footer-contact p strong { color: #fff; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .footer-bottom p { font-size: 0.84rem; color: rgba(255,255,255,0.40); }
+  .footer-flags { display: flex; gap: 8px; align-items: center; }
+  .flag-badge { padding: 4px 12px; border-radius: 50px; font-size: 0.74rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.60); }
 
-  .footer-bottom {
-    bo
+  /* ─── PAGE HERO (subpages) ─── */
+  .page-hero {
+    padding-top: 72px; min-height: 38vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding-inline: 5%; padding-bottom: 60px;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(245,196,0,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 15% 70%, rgba(244,121,32,0.12) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .page-hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .page-hero .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amarillo); color: var(--oscuro);
+    padding: 6px 16px; border-radius: 50px;
+    font-weight: 800; font-size: 0.78rem; letter-spacing: 0.05em;
+    text-transform: uppercase; margin-bottom: 20px;
+    border: 2px solid var(--oscuro); box-shadow: 3px 3px 0 var(--oscuro);
+  }
+  .page-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+    font-weight: 900; line-height: 1.1;
+    color: var(--oscuro); margin-bottom: 18px;
+  }
+  .page-hero h1 .highlight { color: var(--rojo); }
+  .page-hero p { font-size: 1.1rem; color: var(--gris); line-height: 1.65; max-width: 560px; }
+
+  /* ─── PAGE DARK HERO ─── */
+  .page-hero-dark { background: var(--oscuro); }
+  .page-hero-dark::before {
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(245,196,0,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 60% at 15% 70%, rgba(244,121,32,0.08) 0%, transparent 50%);
+  }
+  .page-hero-dark h1 { color: #fff; }
+  .page-hero-dark p { color: rgba(255,255,255,0.65); }
+
+  /* ─── EXPLORAR TALENTO PAGE ─── */
+  #page-talento .search-bar-wrap { margin-bottom: 40px; }
+  .search-input-wrap { display: flex; gap: 12px; margin-bottom: 20px; }
+  .search-input {
+    flex: 1; padding: 14px 20px; border-radius: 50px;
+    border: 2.5px solid var(--oscuro); font-size: 1rem;
+    font-family: 'Nunito', sans-serif; font-weight: 600;
+    background: #fff; outline: none; transition: box-shadow 0.2s;
+  }
+  .search-input:focus { box-shadow: 4px 4px 0 var(--amarillo); }
+  .search-btn {
+    padding: 14px 28px; border-radius: 50px;
+    background: var(--oscuro); color: #fff;
+    font-weight: 800; font-size: 1rem;
+    border: 2.5px solid var(--oscuro); cursor: pointer;
+    font-family: 'Nunito', sans-serif; transition: background 0.2s;
+    box-shadow: 4px 4px 0 var(--naranja);
+  }
+  .search-btn:hover { background: var(--rojo); }
+
+  /* Artist profile modal styles */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(26,18,16,0.75); backdrop-filter: blur(4px);
+    align-items: center; justify-content: center; padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--fondo); border-radius: 24px;
+    border: 3px solid var(--oscuro); box-shadow: 10px 10px 0 var(--oscuro);
+    max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto;
+    animation: modalIn 0.3s ease;
+  }
+  @keyframes modalIn { from { opacity: 0; transform: scale(0.93) translateY(20px); } to { opacity: 1; transform: none; } }
+  .modal-header { background: var(--oscuro); padding: 28px 28px 20px; border-radius: 20px 20px 0 0; }
+  .modal-avatar { font-size: 4rem; margin-bottom: 10px; }
+  .modal-name { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; color: #fff; }
+  .modal-role { font-size: 0.85rem; color: var(--amarillo); font-weight: 800; text-transform: uppercase; margin-top: 4px; }
+  .modal-body { padding: 24px 28px; }
+  .modal-section-title { font-weight: 800; font-size: 0.85rem; text-transform: uppercase; color: var(--gris); letter-spacing: 0.06em; margin-bottom: 8px; margin-top: 20px; }
+  .modal-section-title:first-child { margin-top: 0; }
+  .modal-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .modal-tag { padding: 5px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; background: var(--gris-claro); color: var(--oscuro); border: 1.5px solid var(--oscuro); }
+  .modal-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+  .modal-stat { background: var(--gris-claro); border-radius: 14px; padding: 14px; text-align: center; border: 1.5px solid rgba(26,18,16,0.1); }
+  .modal-stat strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--rojo); }
+  .modal-stat span { font-size: 0.76rem; font-weight: 700; color: var(--gris); text-transform: uppercase; }
+  .modal-footer { padding: 0 28px 28px; display: flex; gap: 12px; }
+  .modal-close-btn { background: none; border: 2px solid var(--oscuro); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; position: absolute; top: 16px; right: 16px; transition: background 0.2s; }
+  .modal-close-btn:hover { background: var(--rojo); color: #fff; border-color: var(--rojo); }
+  .modal-wrap { position: relative; }
+
+  /* ─── EVENTOS PAGE ─── */
+  .eventos-dark-bg { background: var(--oscuro); }
+  .eventos-dark-bg .section-tag { color: var(--amarillo); }
+  .eventos-dark-bg .section-title { color: #fff; }
+  .eventos-dark-bg .section-sub { color: rgba(255,255,255,0.65); }
+
+  .calendar-months { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 60px; }
+  .month-card {
+    background: rgba(255,255,255,0.05); border: 1.5px solid rgba(255,255,255,0.15);
+    border-radius: 18px; padding: 20px; transition: background 0.2s;
+  }
+  .month-card:hover { background: rgba(255,255,255,0.10); }
+  .month-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--amarillo); font-weight: 700; margin-bottom: 14px; }
+  .month-event { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  .month-event:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .m-day { background: var(--rojo); color: #fff; border-radius: 10px; padding: 6px 10px; text-align: center; min-width: 42px; }
+  .m-day strong { display: block; font-size: 1.1rem; font-weight: 900; font-family: 'Playfair Display', serif; }
+  .m-day span { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
+  .m-info h5 { font-size: 0.9rem; color: #fff; font-weight: 700; margin-bottom: 3px; }
+  .m-info p { font-size: 0.78rem; color: rgba(255,255,255,0.55); }
+
+  /* ─── APRENDE PAGE ─── */
+  .aprende-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
+  .aprende-tab { padding: 10px 22px; border-radius: 50px; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: 2px solid var(--oscuro); background: transparent; color: var(--oscuro); font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+  .aprende-tab.active, .aprende-tab:hover { background: var(--azul); color: #fff; border-color: var(--azul); transform: translate(-2px,-2px); box-shadow: 3px 3px 0 var(--oscuro); }
+
+  .aprende-content { display: none; }
+  .aprende-content.active { display: block; animation: fadeUp 0.4s ease; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+  .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .article-card {
+    background: #fff; border: 2px solid var(--oscuro);
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 5px 5px 0 var(--oscuro);
+    transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
+  }
+  .article-card:hover { transform: translate(-4px,-4px); box-shadow: 9px 9px 0 var(--oscuro); }
+  .ac-img { width: 100%; aspect-ratio: 16/10; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+  .ac-body { padding: 20px; }
+  .ac-tag { display: inline-block; padding: 3px 12px; border-radius: 50px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; margin-bottom: 10px; background: var(--azul); color: #fff; }
+  .ac-tag.historia { background: var(--rojo); }
+  .ac-tag.tradicion { background: var(--naranja); }
+  .ac-tag.patrimonio { background: var(--azul); }
+  .ac-tag.musica { background: #7B2D8B; }
+  .ac-tag.danza { background: #E03A2F; }
+  .ac-tag.gastronomia { background: #2E7D32; }
+  .ac-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--oscuro); margin-bottom: 8px; line-height: 1.3; }
+  .ac-sub { font-size: 0.86rem; color: var(--gris); line-height: 1.55; margin-bottom: 14px; }
+  .ac-meta { display: flex; justify-content: space-between; align-items: center; border-top: 1.5px dashed rgba(26,18,16,0.1); padding-top: 12px; }
+  .ac-time { font-size: 0.78rem; color: var(--gris); font-weight: 600; }
+  .btn-leer { color: var(--rojo); font-weight: 800; font-size: 0.85rem; text-decoration: none; background: none; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; }
+  .btn-leer:hover { text-decoration: underline; }
+
+  .cursos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
+  .curso-card {
+    background: var(--oscuro); border-radius: 20px; overflow: hidden;
+    border: 2px solid rgba(255,255,255,0.08);
+    transition: transform 0.25s;
+  }
+  .curso-card:hover { transform: translateY(-6px); }
+  .curso-img { width: 100%; aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+  .curso-body { padding: 18px; }
+  .curso-level { display: inline-block; padding: 3px 10px; border-radius: 50px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
+  .nivel-basico { background: var(--amarillo); color: var(--oscuro); }
+  .nivel-intermedio { background: var(--naranja); color: #fff; }
+  .nivel-avanzado { background: var(--rojo); color: #fff; }
+  .curso-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .curso-instructor { font-size: 0.82rem; color: rgba(255,255,255,0.55); margin-bottom: 12px; }
+  .curso-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 12px; }
+  .curso-price { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--amarillo); }
+  .btn-curso { background: var(--amarillo); color: var(--oscuro); padding: 7px 16px; border-radius: 50px; font-size: 0.82rem; font-weight: 800; border: none; cursor: pointer; font-family: 'Nunito', sans-serif; transition: transform 0.15s; }
+  .btn-curso:hover { transform: scale(1.05); }
+
+  /* ─── CONTACTO PAGE ─── */
+  .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .contact-info-card { background: var(--oscuro); border-radius: 24px; padding: 40px; color: #fff; }
+  .contact-info-card h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; margin-bottom: 28px; color: #fff; }
+  .info-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; }
+  .info-icon { width: 48px; height: 48px; border-radius: 14px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .info-text strong { display: block; font-size: 0.85rem; color: var(--amarillo); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800; margin-bottom: 4px; }
+  .info-text p { font-size: 0.92rem; color: rgba(255,255,255,0.70); line-height: 1.55; }
+  .contact-map { background: linear-gradient(135deg,#1A4FA020,#F5C40020); border-radius: 16px; border: 2px solid var(--oscuro); height: 200px; display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-top: 24px; }
+  .social-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+  .social-pill { padding: 8px 16px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; background: rgba(255,255,255,0.1); color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s; }
+  .social-pill:hover { background: var(--rojo); }
+
+  .contact-form { background: #fff; border: 2.5px solid var(--oscuro); border-radius: 24px; padding: 40px; box-shadow: 8px 8px 0 var(--oscuro); }
+  .contact-form h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; margin-bottom: 28px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; color: var(--gris); }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 13px 18px; border: 2px solid rgba(26,18,16,0.2);
+    border-radius: 14px; font-size: 0.95rem; font-family: 'Nunito', sans-serif;
+    font-weight: 600; background: var(--fondo); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s; color: var(--oscuro);
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--azul); box-shadow: 3px 3px 0 var(--amarillo); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-submit { width: 100%; padding: 16px; border-radius: 50px; background: var(--rojo); color: #fff; font-weight: 800; font-size: 1.05rem; border: 2.5px solid var(--oscuro); cursor: pointer; font-family: 'Nunito', sans-serif; box-shadow: 4px 4px 0 var(--oscuro); transition: transform 0.15s, box-shadow 0.15s; }
+  .form-submit:hover { transform: translate(-3px,-3px); box-shadow: 7px 7px 0 var(--oscuro); }
+  .form-success { display: none; text-align: center; padding: 40px; }
+  .form-success .success-icon { font-size: 4rem; margin-bottom: 16px; }
+  .form-success h4 { font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 10px; }
+  .form-success p { color: var(--gris); }
+  .faq-list { margin-top: 60px; }
+  .faq-item { border-bottom: 2px solid rgba(26,18,16,0.1); }
+  .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700; color: var(--oscuro); }
+  .faq-icon { font-size: 1.2rem; transition: transform 0.3s; }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+  .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+  .faq-a p { font-size: 0.95rem; color: var(--gris); line-height: 1.7; }
+
+  /* ─── REGISTRAR ARTISTA PAGE ─── */
+  .registro-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; align-items: start; }
+  .registro-steps { position: sticky; top: 92px; }
+  .step-list { display: flex; flex-direction: column; gap: 4px; }
+  .step-item { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; transition: background 0.2s; }
+  .step-item.done { background: var(--gris-claro); }
+  .step-item.current { background: var(--amarillo); }
+  .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--oscuro); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 0.9rem; flex-shrink: 0; }
+  .step-item.current .step-num { background: var(--rojo); }
+  .step-item.done .step-num { background: var(--azul); }
+  .step-text strong { display: block; font-weight: 800; font-size: 0.9rem; }
+  .step-text span { font-size: 0.78rem; color: var(--gris); }
+  .step-item.current .step-text span { color: rgba(26,18,16,0.6); }
+
+  .registro-form { background: #fff; border: 2.5px solid var(--oscuro); border-radius: 24px; box-shadow: 8px 8px 0 var(--oscuro); overflow: hidden; }
+  .registro-step-form { display: none; padding: 36px; }
+  .registro-step-form.active { display: block; animation: fadeUp 0.35s ease; }
+  .registro-step-form h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 6px; }
+  .registro-step-form .form-hint { font-size: 0.88rem; color: var(--gris); margin-bottom: 28px; }
+  .cat-select-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
+  .cat-select-item { border: 2.5px solid rgba(26,18,16,0.15); border-radius: 16px; padding: 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .cat-select-item:hover { background: var(--gris-claro); }
+  .cat-select-item.selected { border-color: var(--azul); background: rgba(26,79,160,0.06); }
+  .cat-icon { font-size: 2rem; }
+  .cat-info strong { display: block; font-weight: 800; font-size: 0.9rem; }
+  .cat-info span { font-size: 0.78rem; color: var(--gris); }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .skill-chip { padding: 6px 14px; border-radius: 50px; font-size: 0.82rem; font-weight: 700; border: 2px solid var(--oscuro); cursor: pointer; transition: background 0.15s; background: transparent; font-family: 'Nunito', sans-serif; }
+  .skill-chip.selected { background: var(--oscuro); color: #fff; }
+  .skill-chip:hover:not(.selected) { background: var(--amarillo); }
+  .form-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 36px; background: var(--gris-claro); border-top: 2px solid rgba(26,18,16,0.08); }
+  .step-progress { font-size: 0.85rem; font-weight: 700; color: var(--gris); }
+  .progress-bar { height: 6px; background: rgba(26,18,16,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--rojo), var(--naranja)); border-radius: 3px; transition: width 0.4s ease; }
+  .avatar-upload { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; }
+  .avatar-preview { width: 80px; height: 80px; border-radius: 50%; background: var(--gris-claro); border: 3px solid var(--oscuro); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 4px 4px 0 var(--oscuro); }
+  .upload-btn { background: transparent; border: 2px dashed var(--gris); border-radius: 14px; padding: 12px 20px; cursor: pointer; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.88rem; color: var(--gris); transition: border-color 0.2s, color 0.2s; }
+  .upload-btn:hover { border-color: var(--azul); color: var(--azul); }
+  .registro-success { display: none; padding: 60px 36px; text-align: center; }
+  .registro-success.active { display: block; animation: fadeUp 0.4s ease; }
+  .success-confetti { font-size: 3.5rem; margin-bottom: 16px; }
+  .registro-success h3 { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; margin-bottom: 12px; }
+  .registro-success p { color: var(--gris); font-size: 1rem; line-height: 1.65; max-width: 380px; margin: 0 auto 28px; }
+  .benefits-list { text-align: left; background: var(--gris-claro); border-radius: 16px; padding: 20px 24px; margin: 0 0 28px; display: inline-block; width: 100%; }
+  .benefit-item { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.9rem; font-weight: 600; }
+  .benefit-item:last-child { margin-bottom: 0; }
+
+  /* ─── HERO (INDEX) ─── */
+  #inicio {
+    min-height: 100vh; padding-top: 72px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 40px; padding-inline: 5%;
+    overflow: hidden; position: relative; background: var(--fondo);
+  }
+  #inicio::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 70% at 80% 50%, rgba(245,196,0,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 20% 80%, rgba(244,121,32,0.13) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amarillo); color: var(--oscuro);
+    padding: 6px 16px; border-radius: 50px;
+    font-weight: 800; font-size: 0.78rem; letter-spacing: 0.05em;
+    text-transform: uppercase; margin-bottom: 20px;
+    border: 2px solid var(--oscuro); box-shadow: 3px 3px 0 var(--oscuro);
+  }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 4.5vw, 3.8rem); font-weight: 900; line-height: 1.1; color: var(--oscuro); margin-bottom: 20px; }
+  .hero-title .highlight { color: var(--rojo); position: relative; }
+  .hero-title .highlight::after { content: ''; position: absolute; left: 0; bottom: -4px; right: 0; height: 5px; background: var(--amarillo); border-radius: 3px; }
+  .hero-sub { font-size: 1.1rem; color: var(--gris); line-height: 1.7; margin-bottom: 36px; max-width: 480px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-stats { display: flex; gap: 28px; margin-top: 40px; padding-top: 28px; border-top: 2px solid rgba(26,18,16,0.10); }
+  .hstat { text-align: center; }
+  .hstat strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.9rem; color: var(--azul); }
+  .hstat span { font-size: 0.8rem; font-weight: 700; color: var(--gris); text-transform: uppercase; letter-spacing: 0.04em; }
+  .hero-visual { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .hero-card { border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 3/4; background: var(--gris-claro); border: 3px solid var(--oscuro); box-shadow: 6px 6px 0 var(--oscuro); transition: transform 0.3s; }
+  .hero-card:hover { transform: translate(-4px,-4px); }
+  .hero-card:nth-child(2) { margin-top: 40px; }
+  .hero-card .card-label { position: absolute; bottom: 12px; left: 12px; right: 12px; background: rgba(26,18,16,0.82); color: #fff; padding: 8px 12px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; backdrop-filter: blur(6px); }
+  .hero-card .card-cat { font-size: 0.72rem; color: var(--amarillo); text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* ─── CULTURA (INDEX) ─── */
+  .cultura-section { background: var(--gris-claro); }
+  .cultura-grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 22px; }
+  .cultura-featured { grid-row: 1 / 3; border-radius: 20px; overflow: hidden; background: #fff; border: 2.5px solid var(--oscuro); box-shadow: 6px 6px 0 var(--oscuro); transition: transform 0.25s; }
+  .cultura-featured:hover { transform: translate(-4px,-4px); }
+  .cultura-item { border-radius: 16px; overflow: hidden; background: #fff; border: 2px solid var(--oscuro); box-shadow: 4px 4px 0 var(--oscuro); transition: transform 0.25s; }
+  .cultura-item:hover { transform: translate(-3px,-3px); }
+  .ci-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--gris-claro); }
+  .ci-body { padding: 16px; }
+  .ci-tag { display: inline-block; padding: 3px 12px; border-radius: 50px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; background: var(--azul); color: #fff; }
+  .ci-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--oscuro); margin-bottom: 6px; line-height: 1.3; }
+  .ci-sub { font-size: 0.84rem; color: var(--gris); line-height: 1.5; }
+  .cf-img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; background: var(--gris-claro); }
+  .cf-body { padding: 24px; }
+  .cf-tag { display: inline-block; padding: 4px 14px; border-radius: 50px; font-size: 0.78rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; background: var(--rojo); color: #fff; }
+  .cf-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--oscuro); margin-bottom: 10px; line-height: 1.25; }
+  .cf-sub { font-size: 0.92rem; color: var(--gris); line-height: 1.65; margin-bottom: 16px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    #inicio { grid-template-columns: 1fr; min-height: auto; padding-top: 100px; padding-bottom: 60px; }
+    .hero-visual { display: none; }
+    .hero-stats { flex-wrap: wrap; }
+    .contacto-grid, .registro-layout { grid-template-columns: 1fr; }
+    .registro-steps { position: static; }
+    .cultura-grid { grid-template-columns: 1fr; }
+    .cultura-featured { grid-row: auto; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .impacto-grid { grid-template-columns: repeat(2, 1fr); }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-ctas { flex-direction: column; }
+    .btn-primary, .btn-secondary { justify-content: center; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .impacto-grid { grid-template-columns: repeat(2, 1fr); }
+    .cat-select-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <button class="nav-logo" onclick="navigate('home')" style="background:none;border:none;cursor:pointer;">
+    <div class="logo-mark">🎭</div>
+    <div class="logo-text">
+      <strong>Alma Barranquillera</strong>
+      <span>Cultura • Patrimonio • Identidad</span>
+    </div>
+  </button>
+  <ul class="nav-links">
+    <li><a onclick="navigate('home')" id="nav-home">Inicio</a></li>
+    <li><a onclick="navigate('talento')" id="nav-talento">Explorar Talento</a></li>
+    <li><a onclick="navigate('eventos')" id="nav-eventos">Eventos</a></li>
+    <li><a onclick="navigate('aprende')" id="nav-aprende">Aprende</a></li>
+    <li><a onclick="navigate('contacto')" id="nav-contacto">Contacto</a></li>
+    <li><a onclick="navigate('registro')" class="btn-nav" id="nav-registro">Registrar Artista</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button onclick="navigate('home');toggleMenu()">Inicio</button>
+  <button onclick="navigate('talento');toggleMenu()">Explorar Talento</button>
+  <button onclick="navigate('eventos');toggleMenu()">Eventos Culturales</button>
+  <button onclick="navigate('aprende');toggleMenu()">Aprende sobre Cultura</button>
+  <button onclick="navigate('contacto');toggleMenu()">Contacto</button>
+  <button onclick="navigate('registro');toggleMenu()">Registrar Artista</button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PÁGINA HOME (INDEX)
+════════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="inicio" class="confetti-bg">
+    <div class="hero-content fade-in-left">
+      <div class="hero-badge">🎉 Patrimonio Cultural de la Humanidad</div>
+      <h1 class="hero-title">
+        La cultura<br>barranquillera<br>
+        <span class="highlight">vive todo el año</span>
+      </h1>
+      <p class="hero-sub">Conectamos artistas, artesanos y gestores culturales con nuevas oportunidades. Descubre, contrata y celebra el talento del Carnaval de Barranquilla.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="navigate('talento')">🎭 Explorar Talento</button>
+        <button class="btn-secondary" onclick="navigate('eventos')">📅 Ver Eventos</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat"><strong>320+</strong><span>Artistas</span></div>
+        <div class="hstat"><strong>85</strong><span>Eventos</span></div>
+        <div class="hstat"><strong>48</strong><span>Comunidades</span></div>
+        <div class="hstat"><strong>1.2k</strong><span>Contratos</span></div>
+      </div>
+    </div>
+    <div class="hero-visual fade-in-right">
+      <div class="hero-card">
+        <div class="img-placeholder" style="background: linear-gradient(145deg,#F5C400,#F47920); height:100%;">🪘<span>Músicos</span></div>
+        <div class="card-label"><div class="card-cat">Músico</div>Carlos Insignares</div>
+      </div>
+      <div class="hero-card">
+        <div class="img-placeholder" style="background: linear-gradient(145deg,#E03A2F,#F47920); height:100%;">💃<span>Bailarines</span></div>
+        <div class="card-label"><div class="card-cat">Bailarina</div>Mariana Pedroza</div>
+      </div>
+      <div class="hero-card">
+        <div class="img-placeholder" style="background: linear-gradient(145deg,#1A4FA0,#E03A2F); height:100%;">🎨<span>Artesanos</span></div>
+        <div class="card-label"><div class="card-cat">Artesano</div>Luis Camacho</div>
+      </div>
+      <div class="hero-card">
+        <div class="img-placeholder" style="background: linear-gradient(145deg,#F47920,#F5C400); height:100%;">🎭<span>Cultura</span></div>
+        <div class="card-label"><div class="card-cat">Gestora</div>Rosa Turbay</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <!-- TALENTO PREVIEW -->
+  <section style="padding:90px 5%;">
+    <div class="fade-in">
+      <div class="section-tag">Artistas & Artesanos</div>
+      <h2 class="section-title">Explora el talento<br>barranquillero</h2>
+      <p class="section-sub">Más de 320 artistas, artesanos, músicos, bailarines y gestores culturales listos para llevar la magia del Carnaval a tu evento o proyecto.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="talent-card fade-in">
+        <div class="img-placeholder tc-img" style="background: linear-gradient(135deg,#E03A2F22,#F4792022); border-bottom: 2px solid #eee;">🎷</div>
+        <div class="tc-body"><span class="tc-cat cat-musico">Músico</span><div class="tc-name">Carlos Insignares</div><p class="tc-desc">Maestro de la gaita y la cumbia con 25 años de experiencia. Disponible para eventos corporativos, festivales y grabaciones.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.9 (87 reseñas)</span><button class="btn-ver" onclick="navigate('talento')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in">
+        <div class="img-placeholder tc-img" style="background: linear-gradient(135deg,#F4792022,#F5C40022); border-bottom: 2px solid #eee;">💃</div>
+        <div class="tc-body"><span class="tc-cat cat-bailarin">Bailarina</span><div class="tc-name">Mariana Pedroza</div><p class="tc-desc">Coreógrafa profesional del Congo Grande. Talleres de danza afro-caribeña y shows de cumbia para toda ocasión.</p><div class="tc-footer"><span class="tc-rating">⭐ 5.0 (64 reseñas)</span><button class="btn-ver" onclick="navigate('talento')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in">
+        <div class="img-placeholder tc-img" style="background: linear-gradient(135deg,#F5C40022,#1A4FA022); border-bottom: 2px solid #eee;">🎨</div>
+        <div class="tc-body"><span class="tc-cat cat-artesano">Artesano</span><div class="tc-name">Luis Camacho</div><p class="tc-desc">Creador de máscaras y disfraces tradicionales del Carnaval. Trabajo personalizado, exportaciones y talleres artesanales.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.8 (120 reseñas)</span><button class="btn-ver" onclick="navigate('talento')">Ver Perfil →</button></div></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 40px;">
+      <button class="btn-secondary" onclick="navigate('talento')">Ver todos los artistas →</button>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <!-- EVENTOS PREVIEW -->
+  <section style="padding:90px 5%; background:var(--oscuro);">
+    <div class="fade-in">
+      <div class="section-tag" style="color:var(--amarillo);">Agenda Cultural</div>
+      <h2 class="section-title" style="color:#fff;">Próximos Eventos</h2>
+      <p class="section-sub" style="color:rgba(255,255,255,0.65);">El Carnaval y la cultura barranquillera no tienen fecha de vencimiento. Descubre los próximos eventos.</p>
+    </div>
+    <div class="events-grid">
+      <div class="event-card fade-in">
+        <div class="img-placeholder event-img dark-placeholder" style="background:#2a1510;">🎭</div>
+        <div class="event-body"><div class="event-date">📅 15 de Julio · 2025</div><div class="event-name">Gran Parada de Tradición</div><div class="event-loc">📍 Vía 40, Barranquilla</div><div class="event-desc">El desfile más emblemático del Carnaval de Barranquilla con más de 3.000 artistas.</div><div class="event-footer"><span class="event-tag">Gratuito</span><button class="btn-event" onclick="navigate('eventos')">Ver detalles →</button></div></div>
+      </div>
+      <div class="event-card fade-in">
+        <div class="img-placeholder event-img dark-placeholder" style="background:#1a1025;">🎶</div>
+        <div class="event-body"><div class="event-date">📅 22 de Agosto · 2025</div><div class="event-name">Festival de Gaitas y Cumbia</div><div class="event-loc">📍 Teatro Amira de la Rosa</div><div class="event-desc">Una noche mágica de música tradicional con los mejores exponentes de la gaita y la cumbia colombiana.</div><div class="event-footer"><span class="event-tag">Desde $30.000</span><button class="btn-event" onclick="navigate('eventos')">Ver detalles →</button></div></div>
+      </div>
+      <div class="event-card fade-in">
+        <div class="img-placeholder event-img dark-placeholder" style="background:#102018;">🎨</div>
+        <div class="event-body"><div class="event-date">📅 5 de Sep · 2025</div><div class="event-name">Feria de Artesanías del Caribe</div><div class="event-loc">📍 Centro Comercial Buenavista</div><div class="event-desc">Muestra comercial con más de 80 artesanos de la región Caribe. Máscaras, tejidos y arte popular.</div><div class="event-footer"><span class="event-tag">Gratuito</span><button class="btn-event" onclick="navigate('eventos')">Ver detalles →</button></div></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:40px;">
+      <button class="btn-secondary" style="color:#fff; border-color:rgba(255,255,255,0.5);" onclick="navigate('eventos')">Ver calendario completo →</button>
+    </div>
+  </section>
+
+  <div class="stripe-divider"></div>
+
+  <!-- CULTURA PREVIEW -->
+  <section class="cultura-section" style="padding:90px 5%;">
+    <div class="fade-in">
+      <div class="section-tag">Conocimiento</div>
+      <h2 class="section-title">Aprende sobre<br>nuestra Cultura</h2>
+      <p class="section-sub">El Carnaval de Barranquilla es Patrimonio Oral e Inmaterial de la Humanidad (UNESCO). Conoce su historia, tradiciones y personajes.</p>
+    </div>
+    <div class="cultura-grid">
+      <div class="cultura-featured fade-in-left">
+        <div class="cf-img img-placeholder" style="background:linear-gradient(135deg,#F5C400,#F47920);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;font-size:4rem;">🎭</div>
+        <div class="cf-body">
+          <span class="cf-tag">Historia</span>
+          <h3 class="cf-title">El Carnaval de Barranquilla: 400 años de identidad y resistencia</h3>
+          <p class="cf-sub">Declarado Patrimonio de la Humanidad por la UNESCO en 2003, el Carnaval de Barranquilla es la fusión viva de tres culturas: indígena, africana y española.</p>
+          <button class="btn-leer" onclick="navigate('aprende')">Leer artículo completo →</button>
+        </div>
+      </div>
+      <div class="cultura-item fade-in-right">
+        <div class="ci-img img-placeholder" style="background:linear-gradient(135deg,#1A4FA0,#E03A2F);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🦁</div>
+        <div class="ci-body"><span class="ci-tag">Tradición</span><h4 class="ci-title">La Marimonda: símbolo de la irreverencia popular</h4><p class="ci-sub">Nacida en los barrios del centro, la Marimonda es el personaje más popular del Carnaval.</p><button class="btn-leer" style="color:var(--azul);margin-top:8px;display:inline-flex;align-items:center;gap:6px;" onclick="navigate('aprende')">Descubrir →</button></div>
+      </div>
+      <div class="cultura-item fade-in-right">
+        <div class="ci-img img-placeholder" style="background:linear-gradient(135deg,#E03A2F,#F5C400);display:flex;align-items:center;justify-content:center;font-size:2.5rem;">🪘</div>
+        <div class="ci-body"><span class="ci-tag">Patrimonio</span><h4 class="ci-title">La Cumbia: el latido musical del Caribe colombiano</h4><p class="ci-sub">Ritmo madre del folclor colombiano. La cumbia fusiona gaitas indígenas, tambores africanos y melodías españolas.</p><button class="btn-leer" style="color:var(--rojo);margin-top:8px;display:inline-flex;align-items:center;gap:6px;" onclick="navigate('aprende')">Descubrir →</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACTO -->
+  <section class="impacto-section" style="padding:90px 5%;">
+    <div class="fade-in" style="text-align:center;">
+      <div class="section-tag">Transformación Social</div>
+      <h2 class="section-title">Nuestro Impacto<br>en números</h2>
+      <p class="section-sub" style="margin:0 auto 0;color:rgba(255,255,255,0.65);">Alma Barranquillera trabaja cada día para garantizar que la cultura sea una fuente digna de vida y oportunidades.</p>
+    </div>
+    <div class="impacto-grid">
+      <div class="impacto-card fade-in"><span class="impacto-icon">🎭</span><span class="impacto-num" data-target="320">0</span><span class="impacto-label">Artistas Registrados</span></div>
+      <div class="impacto-card fade-in"><span class="impacto-icon">📅</span><span class="impacto-num" data-target="85">0</span><span class="impacto-label">Eventos Realizados</span></div>
+      <div class="impacto-card fade-in"><span class="impacto-icon">🛍️</span><span class="impacto-num" data-target="1240">0</span><span class="impacto-label">Productos Promovidos</span></div>
+      <div class="impacto-card fade-in"><span class="impacto-icon">🏘️</span><span class="impacto-num" data-target="48">0</span><span class="impacto-label">Comunidades Beneficiadas</span></div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section style="padding:90px 5%; background:var(--fondo);">
+    <div class="fade-in" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:36px;">
+      <div>
+        <div class="section-tag">Voces de la Cultura</div>
+        <h2 class="section-title" style="margin-bottom:0;">Lo que dicen<br>nuestros artistas</h2>
+      </div>
+      <div class="carousel-controls">
+        <button class="car-btn" onclick="moveCarousel(-1)">←</button>
+        <button class="car-btn active" onclick="moveCarousel(1)">→</button>
+      </div>
+    </div>
+    <div class="testimonios-wrap fade-in">
+      <div class="testimonios-track" id="testimTrack">
+        <div class="testimonio-card"><p class="t-text">"Gracias a Alma Barranquillera conseguí mi primer contrato con una empresa multinacional para animar su evento corporativo. Antes solo trabajaba en el Carnaval y ahora tengo trabajo todo el año."</p><div class="t-author"><div class="t-avatar">🎷</div><div class="t-info"><strong>Carlos Insignares</strong><span>Músico de gaita · 25 años de trayectoria</span><div class="t-stars">★★★★★</div></div></div></div>
+        <div class="testimonio-card"><p class="t-text">"La plataforma me conectó con turistas extranjeros que querían aprender a bailar cumbia. Hoy doy talleres en hoteles boutique y el ingreso de mi familia aumentó un 60% en el primer año."</p><div class="t-author"><div class="t-avatar">💃</div><div class="t-info"><strong>Mariana Pedroza</strong><span>Bailarina y coreógrafa · Congo Grande</span><div class="t-stars">★★★★★</div></div></div></div>
+        <div class="testimonio-card"><p class="t-text">"Exporté mis primeras máscaras artesanales a compradores en España y México. Alma Barranquillera me enseñó cómo presentar mi trabajo y conectarme con el mercado internacional."</p><div class="t-author"><div class="t-avatar">🎨</div><div class="t-info"><strong>Luis Camacho</strong><span>Artesano · Máscaras del Carnaval</span><div class="t-stars">★★★★★</div></div></div></div>
+        <div class="testimonio-card"><p class="t-text">"Como empresa, encontramos en esta plataforma el talento perfecto para animar nuestro lanzamiento de producto. La calidad artística fue excepcional y el proceso fue muy fácil."</p><div class="t-author"><div class="t-avatar">🏢</div><div class="t-info"><strong>Ana Gutiérrez</strong><span>Gerente de Eventos · Empresa privada</span><div class="t-stars">★★★★★</div></div></div></div>
+        <div class="testimonio-card"><p class="t-text">"Vine como turista a Barranquilla y a través de Alma Barranquillera viví una experiencia cultural increíble. Tomé talleres, compré artesanías y conocí la historia real del Carnaval."</p><div class="t-author"><div class="t-avatar">✈️</div><div class="t-info"><strong>Michel Dubois</strong><span>Turista · Francia</span><div class="t-stars">★★★★★</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner fade-in">
+    <h2>¿Eres artista o portador de la cultura barranquillera?</h2>
+    <p>Únete a la plataforma y conecta con nuevas oportunidades durante todo el año.</p>
+    <button class="btn-primary" onclick="navigate('registro')">🎭 Registra tu perfil gratis</button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-mark" style="margin-bottom:16px;">🎭</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;">Alma Barranquillera</div>
+        <p>Plataforma digital que conecta a los actores culturales del Carnaval de Barranquilla con el mundo.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn">📘</a>
+          <a href="#" class="social-btn">📸</a>
+          <a href="#" class="social-btn">🐦</a>
+          <a href="#" class="social-btn">▶️</a>
+          <a href="#" class="social-btn">💼</a>
+        </div>
+      </div>
+      <div>
+        <h4>Plataforma</h4>
+        <ul>
+          <li><button onclick="navigate('talento')">Explorar Talento</button></li>
+          <li><button onclick="navigate('eventos')">Eventos Culturales</button></li>
+          <li><button onclick="navigate('aprende')">Aprende Cultura</button></li>
+          <li><button onclick="navigate('registro')">Registrar Artista</button></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Información</h4>
+        <ul>
+          <li><button onclick="navigate('contacto')">Quiénes Somos</button></li>
+          <li><a href="#">Impacto Social</a></li>
+          <li><a href="#">Prensa y Medios</a></li>
+          <li><a href="#">Política de Privacidad</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Contacto</h4>
+        <p><strong>📍 Dirección</strong><br>Calle 72 #54-30, Of. 201<br>Barranquilla, Atlántico, Colombia</p>
+        <p style="margin-top:12px;"><strong>📧 Email</strong><br>hola@almabarranquillera.co</p>
+        <p style="margin-top:12px;"><strong>📞 Teléfono</strong><br>+57 (5) 360 0000</p>
+        <p style="margin-top:12px;"><strong>⏰ Atención</strong><br>Lun–Vie: 8am – 6pm</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Alma Barranquillera · Todos los derechos reservados · Hecho con 🎭 en Barranquilla</p>
+      <div class="footer-flags">
+        <span class="flag-badge">🇨🇴 Colombia</span>
+        <span class="flag-badge">UNESCO Patrimonio</span>
+        <span class="flag-badge">Emprendimiento Social</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PÁGINA: EXPLORAR TALENTO
+════════════════════════════════════════════ -->
+<div class="page" id="page-talento">
+  <div class="page-hero confetti-bg" style="padding-top:72px;min-height:36vh;display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,196,0,0.18) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 15% 70%,rgba(244,121,32,0.12) 0%,transparent 50%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:2;max-width:700px;">
+      <div class="hero-badge">🎭 +320 Artistas</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;line-height:1.1;color:var(--oscuro);margin-bottom:14px;">Explora el <span style="color:var(--rojo);">talento</span><br>barranquillero</h1>
+      <p style="font-size:1.05rem;color:var(--gris);line-height:1.65;max-width:560px;">Artistas, artesanos, músicos, bailarines y gestores culturales listos para llevar la magia del Carnaval a tu proyecto.</p>
+    </div>
+  </div>
+  <div class="stripe-divider"></div>
+
+  <section style="padding:70px 5%;">
+    <!-- Search -->
+    <div class="search-bar-wrap fade-in">
+      <div class="search-input-wrap">
+        <input class="search-input" type="text" placeholder="Buscar por nombre, disciplina o barrio..." id="talentSearch" oninput="filterTalent()">
+        <button class="search-btn">🔍 Buscar</button>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterCards('all',this)">Todos</button>
+        <button class="filter-btn" onclick="filterCards('artesano',this)">🧶 Artesanos</button>
+        <button class="filter-btn" onclick="filterCards('musico',this)">🎷 Músicos</button>
+        <button class="filter-btn" onclick="filterCards('bailarin',this)">💃 Bailarines</button>
+        <button class="filter-btn" onclick="filterCards('gestor',this)">🎭 Gestores</button>
+      </div>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid">
+      <div class="talent-card fade-in" data-cat="musico" data-name="carlos insignares">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#E03A2F22,#F4792022);border-bottom:2px solid #eee;">🎷</div>
+        <div class="tc-body"><span class="tc-cat cat-musico">Músico</span><div class="tc-name">Carlos Insignares</div><p class="tc-desc">Maestro de la gaita y la cumbia con 25 años de experiencia. Disponible para eventos corporativos, festivales y grabaciones.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.9 (87 reseñas)</span><button class="btn-ver" onclick="openArtist('carlos')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in" data-cat="bailarin" data-name="mariana pedroza">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#F4792022,#F5C40022);border-bottom:2px solid #eee;">💃</div>
+        <div class="tc-body"><span class="tc-cat cat-bailarin">Bailarina</span><div class="tc-name">Mariana Pedroza</div><p class="tc-desc">Coreógrafa profesional del Congo Grande. Talleres de danza afro-caribeña, actuaciones y shows de cumbia para toda ocasión.</p><div class="tc-footer"><span class="tc-rating">⭐ 5.0 (64 reseñas)</span><button class="btn-ver" onclick="openArtist('mariana')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in" data-cat="artesano" data-name="luis camacho">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#F5C40022,#1A4FA022);border-bottom:2px solid #eee;">🎨</div>
+        <div class="tc-body"><span class="tc-cat cat-artesano">Artesano</span><div class="tc-name">Luis Camacho</div><p class="tc-desc">Creador de máscaras y disfraces tradicionales del Carnaval. Trabajo personalizado, exportaciones y talleres artesanales.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.8 (120 reseñas)</span><button class="btn-ver" onclick="openArtist('luis')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in" data-cat="gestor" data-name="rosa turbay">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#1A4FA022,#E03A2F22);border-bottom:2px solid #eee;">🎭</div>
+        <div class="tc-body"><span class="tc-cat cat-gestor">Gestora</span><div class="tc-name">Rosa Turbay</div><p class="tc-desc">Coordinadora de eventos y gestora del patrimonio cultural barranquillero. Especialista en producción cultural y turismo.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.9 (55 reseñas)</span><button class="btn-ver" onclick="openArtist('rosa')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in" data-cat="musico" data-name="andrés palomino">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#F5C40022,#E03A2F22);border-bottom:2px solid #eee;">🥁</div>
+        <div class="tc-body"><span class="tc-cat cat-musico">Músico</span><div class="tc-name">Andrés Palomino</div><p class="tc-desc">Percusionista y director de agrupación de mapalé. Grupos de 5 a 20 músicos para festivales, bodas y eventos.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.7 (43 reseñas)</span><button class="btn-ver" onclick="openArtist('andres')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in" data-cat="artesano" data-name="patricia villareal">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#E03A2F22,#F4792022);border-bottom:2px solid #eee;">🧵</div>
+        <div class="tc-body"><span class="tc-cat cat-artesano">Artesana</span><div class="tc-name">Patricia Villareal</div><p class="tc-desc">Tejedora y diseñadora de vestuario típico. Especialista en polleras, tocados y accesorios para comparsas y danzas.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.9 (98 reseñas)</span><button class="btn-ver" onclick="openArtist('patricia')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in" data-cat="bailarin" data-name="jesús orozco">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#1A4FA022,#F5C40022);border-bottom:2px solid #eee;">🕺</div>
+        <div class="tc-body"><span class="tc-cat cat-bailarin">Bailarín</span><div class="tc-name">Jesús Orozco</div><p class="tc-desc">Especialista en danzas afrocolombianas y mapalé. Presentaciones en festivales internacionales y talleres formativos.</p><div class="tc-footer"><span class="tc-rating">⭐ 4.8 (71 reseñas)</span><button class="btn-ver" onclick="openArtist('jesus')">Ver Perfil →</button></div></div>
+      </div>
+      <div class="talent-card fade-in" data-cat="gestor" data-name="claudia pertuz">
+        <div class="img-placeholder tc-img" style="background:linear-gradient(135deg,#F5C40022,#1A4FA022);border-bottom:2px solid #eee;">📋</div>
+        <div class="tc-body"><span class="tc-cat cat-gestor">Gestora</span><div class="tc-name">Claudia Pertuz</div><p class="tc-desc">Gestora cultural y productora de eventos. Experiencia en turismo cultural, rutas del Carnaval y relaciones internacionales.</p><div class="tc-footer"><span class="tc-rating">⭐ 5.0 (39 reseñas)</span><button class="btn-ver" onclick="openArtist('claudia')">Ver Perfil →</button></div></div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:50px;" class="fade-in">
+      <p style="color:var(--gris);margin-bottom:16px;font-weight:600;">Mostrando 8 de 320 artistas</p>
+      <button class="btn-primary" onclick="navigate('registro')">🎭 ¿Eres artista? Regístrate gratis</button>
+    </div>
+  </section>
+
+  <!-- Modal de artista -->
+  <div class="modal-overlay" id="artistModal" onclick="closeModal(event)">
+    <div class="modal-box modal-wrap">
+      <button class="modal-close-btn" onclick="closeModalBtn()">✕</button>
+      <div class="modal-header">
+        <div class="modal-avatar" id="m-avatar">🎷</div>
+        <div class="modal-name" id="m-name">Carlos Insignares</div>
+        <div class="modal-role" id="m-role">Músico de Gaita · Barranquilla</div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section-title">Especialidades</div>
+        <div class="modal-tags" id="m-tags"></div>
+        <div class="modal-section-title" style="margin-top:20px;">Estadísticas</div>
+        <div class="modal-stat-row" id="m-stats"></div>
+        <div class="modal-section-title" style="margin-top:20px;">Sobre el artista</div>
+        <p id="m-bio" style="font-size:0.93rem;color:var(--gris);line-height:1.7;"></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="navigate('contacto')">📩 Contactar</button>
+        <button class="btn-secondary" onclick="closeModalBtn()">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-banner fade-in">
+    <h2>¿Buscas talento para tu evento?</h2>
+    <p>Contáctanos y te ayudamos a encontrar el artista ideal para tu proyecto.</p>
+    <button class="btn-primary" onclick="navigate('contacto')">📩 Contactar ahora</button>
+  </div>
+  <!-- Footer repeated -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-mark" style="margin-bottom:16px;">🎭</div><div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;">Alma Barranquillera</div><p>Plataforma digital que conecta a los actores culturales del Carnaval de Barranquilla con el mundo.</p><div class="footer-social"><a href="#" class="social-btn">📘</a><a href="#" class="social-btn">📸</a><a href="#" class="social-btn">🐦</a><a href="#" class="social-btn">▶️</a></div></div>
+      <div><h4>Plataforma</h4><ul><li><button onclick="navigate('talento')">Explorar Talento</button></li><li><button onclick="navigate('eventos')">Eventos</button></li><li><button onclick="navigate('aprende')">Aprende</button></li><li><button onclick="navigate('registro')">Registrar Artista</button></li></ul></div>
+      <div><h4>Información</h4><ul><li><button onclick="navigate('contacto')">Contacto</button></li><li><a href="#">Política de Privacidad</a></li></ul></div>
+      <div class="footer-contact"><h4>Contacto</h4><p><strong>📧 Email</strong><br>hola@almabarranquillera.co</p><p style="margin-top:12px;"><strong>📞 Teléfono</strong><br>+57 (5) 360 0000</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Alma Barranquillera · Todos los derechos reservados</p><div class="footer-flags"><span class="flag-badge">🇨🇴 Colombia</span><span class="flag-badge">UNESCO Patrimonio</span></div></div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PÁGINA: EVENTOS CULTURALES
+════════════════════════════════════════════ -->
+<div class="page" id="page-eventos">
+  <div style="padding-top:72px;min-height:38vh;background:var(--oscuro);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,196,0,0.12) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:2;max-width:700px;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--amarillo);color:var(--oscuro);padding:6px 16px;border-radius:50px;font-weight:800;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:20px;border:2px solid rgba(255,255,255,0.2);box-shadow:3px 3px 0 rgba(255,255,255,0.3);">📅 Agenda 2025–2026</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;line-height:1.1;color:#fff;margin-bottom:14px;">Eventos <span style="color:var(--amarillo);">Culturales</span></h1>
+      <p style="font-size:1.05rem;color:rgba(255,255,255,0.65);line-height:1.65;max-width:560px;">La cultura barranquillera no tiene fecha de vencimiento. Descubre la agenda de eventos, talleres y festivales durante todo el año.</p>
+    </div>
+  </div>
+  <div class="stripe-divider"></div>
+
+  <!-- Calendario por meses -->
+  <section class="eventos-dark-bg" style="padding:70px 5%;">
+    <div class="section-tag">Vista Rápida</div>
+    <h2 class="section-title">Calendario 2025</h2>
+    <p class="section-sub">Encuentra eventos por mes y planifica tu agenda cultural.</p>
+    <div class="calendar-months fade-in">
+      <div class="month-card">
+        <div class="month-name">Julio 2025</div>
+        <div class="month-event"><div class="m-day"><strong>15</strong><span>Jul</span></div><div class="m-info"><h5>Gran Parada de Tradición</h5><p>📍 Vía 40 · Gratuito</p></div></div>
+        <div class="month-event"><div class="m-day"><strong>28</strong><span>Jul</span></div><div class="m-info"><h5>Noche de Gaitas en el Parque</h5><p>📍 Parque Cultural del Caribe · Gratuito</p></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month-name">Agosto 2025</div>
+        <div class="month-event"><div class="m-day"><strong>10</strong><span>Ago</span></div><div class="m-info"><h5>Taller: Máscaras de Carnaval</h5><p>📍 Casa de la Cultura · $25.000</p></div></div>
+        <div class="month-event"><div class="m-day"><strong>22</strong><span>Ago</span></div><div class="m-info"><h5>Festival de Gaitas y Cumbia</h5><p>📍 Teatro Amira de la Rosa · Desde $30.000</p></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month-name">Septiembre 2025</div>
+        <div class="month-event"><div class="m-day"><strong>5</strong><span>Sep</span></div><div class="m-info"><h5>Feria de Artesanías del Caribe</h5><p>📍 C.C. Buenavista · Gratuito</p></div></div>
+        <div class="month-event"><div class="m-day"><strong>20</strong><span>Sep</span></div><div class="m-info"><h5>Muestra de Danzas Folclóricas</h5><p>📍 Plaza de la Paz · Gratuito</p></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month-name">Octubre 2025</div>
+        <div class="month-event"><div class="m-day"><strong>12</strong><span>Oct</span></div><div class="m-info"><h5>Taller: Danzas Afrocolombianas</h5><p>📍 Casa del Carnaval · $45.000</p></div></div>
+        <div class="month-event"><div class="m-day"><strong>25</strong><span>Oct</span></div><div class="m-info"><h5>Encuentro de Artesanos del Caribe</h5><p>📍 Barrio Abajo · Gratuito</p></div></div>
+      </div>
+      <div class="month-card">
+        <div class="month-name">Diciembre 2025</div>
+        <div class="month-event"><div class="m-day" style="background:var(--azul);"><strong>1</strong><span>Dic</span></div><div class="m-info"><h5>Navidad al Ritmo del Caribe</h5><p>📍 Plaza de la Paz · Gratuito</p></div></div>
+        <div class="month-event"><div class="m-day" style="background:var(--azul);"><strong>20</strong><span>Dic</span></div><div class="m-info"><h5>Novena al Son de Cumbia</h5><p>📍 Barrio El Prado · Gratuito</p></div></div>
+      </div>
+      <div class="month-card" style="border-color:var(--amarillo);">
+        <div class="month-name" style="color:var(--amarillo);">Febrero 2026 ⭐ Carnaval</div>
+        <div class="month-event"><div class="m-day" style="background:var(--amarillo);color:var(--oscuro);"><strong>7</strong><span>Feb</span></div><div class="m-info"><h5>Lectura del Bando</h5><p>📍 Vía 40 · Gratuito</p></div></div>
+        <div class="month-event"><div class="m-day" style="background:var(--amarillo);color:var(--oscuro);"><strong>8</strong><span>Feb</span></div><div class="m-info"><h5>Batalla de Flores 2026</h5><p>📍 Vía 40 · Desde $80.000</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eventos destacados -->
+  <section class="eventos-dark-bg" style="padding:10px 5% 70px;">
+    <div class="section-tag">Próximos Eventos</div>
+    <h2 class="section-title">Todos los Eventos</h2>
+    <div class="filter-bar" style="margin-bottom:30px;">
+      <button class="filter-btn active" onclick="filterEvents('all',this)" style="color:#fff;border-color:rgba(255,255,255,0.4);">Todos</button>
+      <button class="filter-btn" onclick="filterEvents('gratuito',this)" style="color:#fff;border-color:rgba(255,255,255,0.4);">🆓 Gratuitos</button>
+      <button class="filter-btn" onclick="filterEvents('taller',this)" style="color:#fff;border-color:rgba(255,255,255,0.4);">🎓 Talleres</button>
+      <button class="filter-btn" onclick="filterEvents('festival',this)" style="color:#fff;border-color:rgba(255,255,255,0.4);">🎉 Festivales</button>
+    </div>
+    <div class="events-grid" id="eventsGrid">
+      <div class="event-card fade-in" data-ecat="festival"><div class="img-placeholder event-img dark-placeholder" style="background:#2a1510;">🎭</div><div class="event-body"><div class="event-date">📅 15 de Julio · 2025</div><div class="event-name">Gran Parada de Tradición</div><div class="event-loc">📍 Vía 40, Barranquilla</div><div class="event-desc">El desfile más emblemático del Carnaval de Barranquilla reunirá más de 3.000 artistas.</div><div class="event-footer"><span class="event-tag" style="background:var(--azul);">Gratuito</span><button class="btn-event">Inscribirme →</button></div></div></div>
+      <div class="event-card fade-in" data-ecat="festival"><div class="img-placeholder event-img dark-placeholder" style="background:#1a1025;">🎶</div><div class="event-body"><div class="event-date">📅 22 de Agosto · 2025</div><div class="event-name">Festival de Gaitas y Cumbia</div><div class="event-loc">📍 Teatro Amira de la Rosa</div><div class="event-desc">Una noche mágica de música tradicional con los mejores exponentes de la gaita y la cumbia colombiana.</div><div class="event-footer"><span class="event-tag">Desde $30.000</span><button class="btn-event">Comprar entradas →</button></div></div></div>
+      <div class="event-card fade-in" data-ecat="gratuito"><div class="img-placeholder event-img dark-placeholder" style="background:#102018;">🎨</div><div class="event-body"><div class="event-date">📅 5 de Sep · 2025</div><div class="event-name">Feria de Artesanías del Caribe</div><div class="event-loc">📍 C.C. Buenavista</div><div class="event-desc">Muestra comercial con más de 80 artesanos de la región Caribe. Máscaras, tejidos, joyería y arte popular.</div><div class="event-footer"><span class="event-tag" style="background:var(--azul);">Gratuito</span><button class="btn-event">Ver más →</button></div></div></div>
+      <div class="event-card fade-in" data-ecat="taller"><div class="img-placeholder event-img dark-placeholder" style="background:#201510;">💃</div><div class="event-body"><div class="event-date">📅 12 de Oct · 2025</div><div class="event-name">Taller: Danzas Afrocolombianas</div><div class="event-loc">📍 Casa del Carnaval</div><div class="event-desc">Aprende las raíces del mapalé y la cumbia con maestros certificados. Cupos limitados.</div><div class="event-footer"><span class="event-tag">$45.000 / pers.</span><button class="btn-event">Reservar cupo →</button></div></div></div>
+      <div class="event-card fade-in" data-ecat="gratuito"><div class="img-placeholder event-img dark-placeholder" style="background:#101520;">🎠</div><div class="event-body"><div class="event-date">📅 1 de Dic · 2025</div><div class="event-name">Navidad al Ritmo del Caribe</div><div class="event-loc">📍 Plaza de la Paz</div><div class="event-desc">Celebración navideña con ritmos caribes, danzas folclóricas y exposición de nacimientos artesanales.</div><div class="event-footer"><span class="event-tag" style="background:var(--azul);">Gratuito</span><button class="btn-event">Ver detalles →</button></div></div></div>
+      <div class="event-card fade-in" data-ecat="festival" style="border-color:var(--amarillo);"><div class="img-placeholder event-img dark-placeholder" style="background:#1a1010;">🏆</div><div class="event-body"><div class="event-date">📅 8 de Feb · 2026</div><div class="event-name">Batalla de Flores 2026</div><div class="event-loc">📍 Vía 40, Barranquilla</div><div class="event-desc">La apertura oficial del Carnaval de Barranquilla. El evento más importante del año con miles de artistas en desfile.</div><div class="event-footer"><span class="event-tag">Palco desde $80.000</span><button class="btn-event">Comprar palco →</button></div></div></div>
+      <div class="event-card fade-in" data-ecat="taller"><div class="img-placeholder event-img dark-placeholder" style="background:#0d1a2a;">🎨</div><div class="event-body"><div class="event-date">📅 10 de Ago · 2025</div><div class="event-name">Taller: Máscaras del Carnaval</div><div class="event-loc">📍 Casa de la Cultura Barranquilla</div><div class="event-desc">Aprende a elaborar máscaras tradicionales con artesanos certificados. Material incluido. Apto para todas las edades.</div><div class="event-footer"><span class="event-tag">$25.000 / pers.</span><button class="btn-event">Inscribirme →</button></div></div></div>
+      <div class="event-card fade-in" data-ecat="gratuito"><div class="img-placeholder event-img dark-placeholder" style="background:#1a0d10;">🎺</div><div class="event-body"><div class="event-date">📅 28 de Jul · 2025</div><div class="event-name">Noche de Gaitas en el Parque</div><div class="event-loc">📍 Parque Cultural del Caribe</div><div class="event-desc">Concierto al aire libre con los mejores grupos de gaita de la costa Caribe colombiana. Entrada libre.</div><div class="event-footer"><span class="event-tag" style="background:var(--azul);">Gratuito</span><button class="btn-event">Ver más →</button></div></div></div>
+    </div>
+  </section>
+
+  <div class="cta-banner fade-in">
+    <h2>¿Tienes un evento cultural que quieres promover?</h2>
+    <p>Publícalo en nuestra plataforma y llega a miles de amantes de la cultura barranquillera.</p>
+    <button class="btn-primary" onclick="navigate('contacto')">📅 Publicar mi evento</button>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-mark" style="margin-bottom:16px;">🎭</div><div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;">Alma Barranquillera</div><p>Plataforma digital que conecta a los actores culturales del Carnaval de Barranquilla con el mundo.</p></div>
+      <div><h4>Plataforma</h4><ul><li><button onclick="navigate('talento')">Explorar Talento</button></li><li><button onclick="navigate('eventos')">Eventos</button></li><li><button onclick="navigate('aprende')">Aprende</button></li><li><button onclick="navigate('registro')">Registrar Artista</button></li></ul></div>
+      <div><h4>Información</h4><ul><li><button onclick="navigate('contacto')">Contacto</button></li></ul></div>
+      <div class="footer-contact"><h4>Contacto</h4><p><strong>📧</strong> hola@almabarranquillera.co</p><p style="margin-top:8px;"><strong>📞</strong> +57 (5) 360 0000</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Alma Barranquillera · Todos los derechos reservados</p><div class="footer-flags"><span class="flag-badge">🇨🇴 Colombia</span><span class="flag-badge">UNESCO Patrimonio</span></div></div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PÁGINA: APRENDE
+════════════════════════════════════════════ -->
+<div class="page" id="page-aprende">
+  <div style="padding-top:72px;min-height:38vh;background:var(--azul);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 40%,rgba(245,196,0,0.15) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:2;max-width:700px;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--amarillo);color:var(--oscuro);padding:6px 16px;border-radius:50px;font-weight:800;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:20px;border:2px solid rgba(255,255,255,0.3);box-shadow:3px 3px 0 rgba(245,196,0,0.4);">📚 UNESCO Patrimonio</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;line-height:1.1;color:#fff;margin-bottom:14px;">Aprende sobre<br><span style="color:var(--amarillo);">nuestra Cultura</span></h1>
+      <p style="font-size:1.05rem;color:rgba(255,255,255,0.75);line-height:1.65;max-width:560px;">Artículos, guías y cursos sobre el Carnaval de Barranquilla, su historia, sus danzas, su música y su gente.</p>
+    </div>
+  </div>
+  <div class="stripe-divider"></div>
+
+  <section style="padding:70px 5%;">
+    <div class="aprende-tabs fade-in">
+      <button class="aprende-tab active" onclick="switchTab('articulos',this)">📰 Artículos</button>
+      <button class="aprende-tab" onclick="switchTab('cursos',this)">🎓 Cursos</button>
+      <button class="aprende-tab" onclick="switchTab('glosario',this)">📖 Glosario Cultural</button>
+    </div>
+
+    <!-- ARTÍCULOS -->
+    <div class="aprende-content active" id="tab-articulos">
+      <div class="filter-bar fade-in">
+        <button class="filter-btn active" onclick="filterArticles('all',this)">Todos</button>
+        <button class="filter-btn" onclick="filterArticles('historia',this)">Historia</button>
+        <button class="filter-btn" onclick="filterArticles('tradicion',this)">Tradición</button>
+        <button class="filter-btn" onclick="filterArticles('musica',this)">Música</button>
+        <button class="filter-btn" onclick="filterArticles('danza',this)">Danza</button>
+        <button class="filter-btn" onclick="filterArticles('gastronomia',this)">Gastronomía</button>
+      </div>
+      <div class="articles-grid" id="articlesGrid">
+        <div class="article-card fade-in" data-atag="historia"><div class="ac-img" style="background:linear-gradient(135deg,#F5C400,#F47920);">🎭</div><div class="ac-body"><span class="ac-tag historia">Historia</span><h3 class="ac-title">El Carnaval de Barranquilla: 400 años de identidad y resistencia</h3><p class="ac-sub">Declarado Patrimonio de la Humanidad por la UNESCO en 2003, el Carnaval fusiona tres culturas: indígena, africana y española.</p><div class="ac-meta"><span class="ac-time">⏱ 8 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+        <div class="article-card fade-in" data-atag="tradicion"><div class="ac-img" style="background:linear-gradient(135deg,#1A4FA0,#E03A2F);">🦁</div><div class="ac-body"><span class="ac-tag tradicion">Tradición</span><h3 class="ac-title">La Marimonda: símbolo de la irreverencia popular barranquillera</h3><p class="ac-sub">Nacida en los barrios del centro, la Marimonda es el personaje más querido y peculiar del Carnaval.</p><div class="ac-meta"><span class="ac-time">⏱ 5 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+        <div class="article-card fade-in" data-atag="musica"><div class="ac-img" style="background:linear-gradient(135deg,#E03A2F,#F5C400);">🪘</div><div class="ac-body"><span class="ac-tag musica">Música</span><h3 class="ac-title">La Cumbia: el latido musical del Caribe colombiano</h3><p class="ac-sub">Ritmo madre del folclor colombiano. La cumbia fusiona gaitas indígenas, tambores africanos y melodías españolas.</p><div class="ac-meta"><span class="ac-time">⏱ 6 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+        <div class="article-card fade-in" data-atag="danza"><div class="ac-img" style="background:linear-gradient(135deg,#F47920,#1A4FA0);">💃</div><div class="ac-body"><span class="ac-tag danza">Danza</span><h3 class="ac-title">El Mapalé: sensualidad y energía en cada paso</h3><p class="ac-sub">Una de las danzas más icónicas del Caribe colombiano. Descubre su origen africano y su evolución en el Carnaval.</p><div class="ac-meta"><span class="ac-time">⏱ 4 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+        <div class="article-card fade-in" data-atag="tradicion"><div class="ac-img" style="background:linear-gradient(135deg,#F5C400,#1A4FA0);">👑</div><div class="ac-body"><span class="ac-tag tradicion">Tradición</span><h3 class="ac-title">El Rey Momo: guardián y símbolo del Carnaval</h3><p class="ac-sub">Conoce la historia del personaje que abre y cierra el Carnaval, y lo que representa para la cultura barranquillera.</p><div class="ac-meta"><span class="ac-time">⏱ 5 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+        <div class="article-card fade-in" data-atag="gastronomia"><div class="ac-img" style="background:linear-gradient(135deg,#2E7D32,#F47920);">🍲</div><div class="ac-body"><span class="ac-tag gastronomia">Gastronomía</span><h3 class="ac-title">Sabores del Carnaval: la gastronomía típica de Barranquilla</h3><p class="ac-sub">Del sancocho trifásico al bollo de yuca. Descubre los sabores que acompañan la celebración más grande del Caribe.</p><div class="ac-meta"><span class="ac-time">⏱ 7 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+        <div class="article-card fade-in" data-atag="historia"><div class="ac-img" style="background:linear-gradient(135deg,#E03A2F,#1A4FA0);">🏆</div><div class="ac-body"><span class="ac-tag historia">Historia</span><h3 class="ac-title">La Batalla de Flores: cómo nació el desfile más famoso de Colombia</h3><p class="ac-sub">En 1903, tras el fin de la Guerra de los Mil Días, Barranquilla celebró la paz con un desfile de flores. Así nació una tradición centenaria.</p><div class="ac-meta"><span class="ac-time">⏱ 6 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+        <div class="article-card fade-in" data-atag="musica"><div class="ac-img" style="background:linear-gradient(135deg,#7B2D8B,#F5C400);">🎺</div><div class="ac-body"><span class="ac-tag musica">Música</span><h3 class="ac-title">La Gaita: el instrumento ancestral que define el Carnaval</h3><p class="ac-sub">Originaria de los pueblos Zenú, la gaita es el instrumento que da voz a las tradiciones más profundas de la costa Caribe.</p><div class="ac-meta"><span class="ac-time">⏱ 5 min de lectura</span><button class="btn-leer">Leer →</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- CURSOS -->
+    <div class="aprende-content" id="tab-cursos">
+      <div class="cursos-grid fade-in">
+        <div class="curso-card"><div class="curso-img" style="background:linear-gradient(135deg,#E03A2F,#F47920);">🪘</div><div class="curso-body"><span class="curso-level nivel-basico">Básico</span><div class="curso-title">Introducción a la Cumbia</div><div class="curso-instructor">👩‍🏫 Mariana Pedroza · 6 semanas</div><div class="curso-footer"><span class="curso-price">$120.000</span><button class="curso-btn">Inscribirme</button></div></div></div>
+        <div class="curso-card"><div class="curso-img" style="background:linear-gradient(135deg,#F5C400,#F47920);">🎭</div><div class="curso-body"><span class="curso-level nivel-basico">Básico</span><div class="curso-title">Historia del Carnaval de Barranquilla</div><div class="curso-instructor">👨‍🏫 Dr. Felipe Melo · 4 semanas</div><div class="curso-footer"><span class="curso-price">$80.000</span><button class="curso-btn">Inscribirme</button></div></div></div>
+        <div class="curso-card"><div class="curso-img" style="background:linear-gradient(135deg,#1A4FA0,#E03A2F);">🎨</div><div class="curso-body"><span class="curso-level nivel-intermedio">Intermedio</span><div class="curso-title">Elaboración de Máscaras Artesanales</div><div class="curso-instructor">🎨 Luis Camacho · 8 semanas</div><div class="curso-footer"><span class="curso-price">$200.000</span><button class="curso-btn">Inscribirme</button></div></div></div>
+        <div class="curso-card"><div class="curso-img" style="background:linear-gradient(135deg,#F47920,#1A4FA0);">💃</div><div class="curso-body"><span class="curso-level nivel-intermedio">Intermedio</span><div class="curso-title">Danzas Afrocolombianas: Mapalé</div><div class="curso-instructor">💃 Jesús Orozco · 10 semanas</div><div class="curso-footer"><span class="curso-price">$160.000</span><button class="curso-btn">Inscribirme</button></div></div></div>
+        <div class="curso-card"><div class="curso-img" style="background:linear-gradient(135deg,#E03A2F,#F5C400);">🎷</div><div class="curso-body"><span class="curso-level nivel-avanzado">Avanzado</span><div class="curso-title">Técnica de Gaita Colombiana</div><div class="curso-instructor">🎷 Carlos Insignares · 12 semanas</div><div class="curso-footer"><span class="curso-price">$280.000</span><button class="curso-btn">Inscribirme</button></div></div></div>
+        <div class="curso-card"><div class="curso-img" style="background:linear-gradient(135deg,#1A4FA0,#F5C400);">📸</div><div class="curso-body"><span class="curso-level nivel-basico">Básico</span><div class="curso-title">Fotografía de Festivales y Carnaval</div><div class="curso-instructor">📷 Ana Roa · 4 semanas</div><div class="curso-footer"><span class="curso-price">$90.000</span><button class="curso-btn">Inscribirme</button></div></div></div>
+      </div>
+    </div>
+
+    <!-- GLOSARIO -->
+    <div class="aprende-content" id="tab-glosario">
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;" class="fade-in" id="glosarioGrid">
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--rojo);margin-bottom:8px;">Marimonda</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--naranja);color:#fff;margin-bottom:10px;">Personaje</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Disfraz emblemático del Carnaval que utiliza una máscara con orejas de burro y trompa de elefante. Representa la burla popular al poder y a la élite barranquillera.</p>
+        </div>
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--azul);margin-bottom:8px;">Cumbia</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--azul);color:#fff;margin-bottom:10px;">Música & Danza</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Ritmo y danza folclórica de origen afroindígena. Es considerada el ritmo madre de la música colombiana y símbolo de la identidad caribeña.</p>
+        </div>
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--amarillo);margin-bottom:8px;">Congo</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--rojo);color:#fff;margin-bottom:10px;">Danza</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Danza de origen africano que es una de las más antiguas del Carnaval. Se caracteriza por sus trajes vistosos, movimientos enérgicos y la presencia de un rey y una reina.</p>
+        </div>
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--naranja);margin-bottom:8px;">Mapalé</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--naranja);color:#fff;margin-bottom:10px;">Danza</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Danza de origen africano de ritmo vertiginoso y movimientos sensuales y enérgicos. Su nombre proviene de un pez del río Magdalena.</p>
+        </div>
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--rojo);margin-bottom:8px;">Rey Momo</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--amarillo);color:var(--oscuro);margin-bottom:10px;">Personaje</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Rey simbólico del Carnaval. Personaje mítico que representa el jolgorio y la fiesta. Recibe las llaves de la ciudad durante el Carnaval.</p>
+        </div>
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--azul);margin-bottom:8px;">Gaita</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--azul);color:#fff;margin-bottom:10px;">Música</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Instrumento de viento de origen indígena Zenú. Existen la gaita hembra y la gaita macho. Es el instrumento más representativo de la música tradicional de la costa Caribe.</p>
+        </div>
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--naranja);margin-bottom:8px;">Bando</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--naranja);color:#fff;margin-bottom:10px;">Ritual</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Proclama oficial que inaugura el Carnaval. El Bando es leído por la Reina del Carnaval y marca el inicio de las festividades.</p>
+        </div>
+        <div style="background:#fff;border:2px solid var(--oscuro);border-radius:18px;padding:22px;box-shadow:4px 4px 0 var(--oscuro);">
+          <div style="font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--rojo);margin-bottom:8px;">Porro</div>
+          <span style="display:inline-block;padding:2px 10px;border-radius:50px;font-size:0.72rem;font-weight:800;background:var(--rojo);color:#fff;margin-bottom:10px;">Música</span>
+          <p style="font-size:0.88rem;color:var(--gris);line-height:1.6;">Género musical de la costa Caribe colombiana. El porro palitiao y el porro tapao son sus dos variantes principales, ambas con fuerte presencia de instrumentos de viento.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner fade-in">
+    <h2>¿Eres docente o investigador cultural?</h2>
+    <p>Colabora con nosotros y ayuda a preservar el patrimonio inmaterial del Carnaval.</p>
+    <button class="btn-primary" onclick="navigate('contacto')">📚 Colaborar</button>
+  </div>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-mark" style="margin-bottom:16px;">🎭</div><div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;">Alma Barranquillera</div><p>Plataforma digital que conecta a los actores culturales del Carnaval de Barranquilla con el mundo.</p></div>
+      <div><h4>Plataforma</h4><ul><li><button onclick="navigate('talento')">Explorar Talento</button></li><li><button onclick="navigate('eventos')">Eventos</button></li><li><button onclick="navigate('aprende')">Aprende</button></li><li><button onclick="navigate('registro')">Registrar Artista</button></li></ul></div>
+      <div><h4>Información</h4><ul><li><button onclick="navigate('contacto')">Contacto</button></li></ul></div>
+      <div class="footer-contact"><h4>Contacto</h4><p><strong>📧</strong> hola@almabarranquillera.co</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Alma Barranquillera · Todos los derechos reservados</p></div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PÁGINA: CONTACTO
+════════════════════════════════════════════ -->
+<div class="page" id="page-contacto">
+  <div class="page-hero confetti-bg" style="padding-top:72px;min-height:36vh;display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,196,0,0.18) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 15% 70%,rgba(244,121,32,0.12) 0%,transparent 50%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:2;max-width:700px;">
+      <div class="hero-badge">📩 Estamos aquí para ayudarte</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;line-height:1.1;color:var(--oscuro);margin-bottom:14px;">Hablemos de <span style="color:var(--rojo);">cultura</span></h1>
+      <p style="font-size:1.05rem;color:var(--gris);line-height:1.65;max-width:560px;">Tienes una pregunta, quieres contratar un artista o deseas unirte a la plataforma. Estamos listos para escucharte.</p>
+    </div>
+  </div>
+  <div class="stripe-divider"></div>
+
+  <section style="padding:70px 5%;">
+    <div class="contacto-grid">
+      <div>
+        <div class="contact-info-card fade-in-left">
+          <h3>Información de Contacto</h3>
+          <div class="info-item">
+            <div class="info-icon">📍</div>
+            <div class="info-text"><strong>Dirección</strong><p>Calle 72 #54-30, Of. 201<br>Barranquilla, Atlántico, Colombia</p></div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">📧</div>
+            <div class="info-text"><strong>Email</strong><p>hola@almabarranquillera.co<br>artistas@almabarranquillera.co</p></div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">📞</div>
+            <div class="info-text"><strong>Teléfono</strong><p>+57 (5) 360 0000<br>+57 315 000 0000 (WhatsApp)</p></div>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">⏰</div>
+            <div class="info-text"><strong>Horario de Atención</strong><p>Lunes a Viernes: 8am – 6pm<br>Sábados: 9am – 1pm</p></div>
+          </div>
+          <div class="contact-map">🗺️</div>
+          <div class="social-row">
+            <a href="#" class="social-pill">📘 Facebook</a>
+            <a href="#" class="social-pill">📸 Instagram</a>
+            <a href="#" class="social-pill">▶️ YouTube</a>
+            <a href="#" class="social-pill">💼 LinkedIn</a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form fade-in-right">
+          <h3>Envíanos un mensaje</h3>
+          <div id="contactFormWrap">
+            <div class="form-row">
+              <div class="form-group"><label>Nombre</label><input class="form-input" type="text" placeholder="Tu nombre completo"></div>
+              <div class="form-group"><label>Apellido</label><input class="form-input" type="text" placeholder="Tu apellido"></div>
+            </div>
+            <div class="form-group"><label>Correo electrónico</label><input class="form-input" type="email" placeholder="tu@correo.com"></div>
+            <div class="form-group"><label>Teléfono</label><input class="form-input" type="tel" placeholder="+57 3XX XXX XXXX"></div>
+            <div class="form-group">
+              <label>Motivo de contacto</label>
+              <select class="form-select">
+                <option value="">Selecciona una opción</option>
+                <option>Contratar un artista</option>
+                <option>Registrar mi perfil como artista</option>
+                <option>Publicar un evento</option>
+                <option>Alianzas institucionales</option>
+                <option>Prensa y medios</option>
+                <option>Otro</option>
+              </select>
+            </div>
+            <div class="form-group"><label>Mensaje</label><textarea class="form-textarea" placeholder="Cuéntanos cómo podemos ayudarte..."></textarea></div>
+            <button class="form-submit" onclick="submitContact()">📩 Enviar Mensaje</button>
+          </div>
+          <div class="form-success" id="contactSuccess">
+            <div class="success-icon">🎉</div>
+            <h4>¡Mensaje enviado!</h4>
+            <p>Gracias por contactarnos. Nuestro equipo responderá dentro de las próximas 24 horas hábiles.</p>
+            <button class="btn-primary" onclick="resetContact()" style="margin-top:20px;">Enviar otro mensaje</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-list fade-in" style="margin-top:80px;">
+      <div style="margin-bottom:40px;">
+        <div class="section-tag">Preguntas Frecuentes</div>
+        <h2 class="section-title">¿Tienes dudas?</h2>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cómo puedo contratar a un artista a través de la plataforma? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Explora el catálogo de artistas, encuentra el perfil que se ajuste a tus necesidades y haz clic en "Contactar". Recibirás una propuesta en menos de 24 horas. También puedes escribirnos directamente y te asignamos el artista ideal para tu evento.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cuánto cuesta registrar mi perfil como artista? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>El registro es completamente gratuito. Alma Barranquillera recibe una pequeña comisión solo cuando se concrete un contrato a través de la plataforma. No hay costos fijos ni cuotas mensuales.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Los eventos listados en la plataforma son todos gratuitos? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>No todos. Algunos eventos son gratuitos y otros tienen costo de entrada. En cada evento encontrarás la información detallada del precio, lugar y forma de pago.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿Cómo puedo publicar mi evento en Alma Barranquillera? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Contáctanos a través de este formulario o al correo eventos@almabarranquillera.co. Revisamos cada solicitud y te confirmamos en máximo 2 días hábiles.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">¿La plataforma está disponible en todo Colombia? <span class="faq-icon">+</span></button>
+        <div class="faq-a"><p>Sí. Aunque estamos basados en Barranquilla y enfocados en la cultura del Carnaval, nuestros artistas pueden trabajar en cualquier ciudad de Colombia y en el exterior.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-mark" style="margin-bottom:16px;">🎭</div><div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;">Alma Barranquillera</div><p>Plataforma digital que conecta a los actores culturales del Carnaval de Barranquilla con el mundo.</p></div>
+      <div><h4>Plataforma</h4><ul><li><button onclick="navigate('talento')">Explorar Talento</button></li><li><button onclick="navigate('eventos')">Eventos</button></li><li><button onclick="navigate('aprende')">Aprende</button></li><li><button onclick="navigate('registro')">Registrar Artista</button></li></ul></div>
+      <div><h4>Información</h4><ul><li><a href="#">Política de Privacidad</a></li></ul></div>
+      <div class="footer-contact"><h4>Contacto</h4><p><strong>📧</strong> hola@almabarranquillera.co</p><p style="margin-top:8px;"><strong>📞</strong> +57 (5) 360 0000</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Alma Barranquillera · Todos los derechos reservados</p><div class="footer-flags"><span class="flag-badge">🇨🇴 Colombia</span><span class="flag-badge">UNESCO Patrimonio</span></div></div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PÁGINA: REGISTRAR ARTISTA
+════════════════════════════════════════════ -->
+<div class="page" id="page-registro">
+  <div style="padding-top:72px;min-height:38vh;background:linear-gradient(135deg,var(--rojo),#b02820);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 40%,rgba(245,196,0,0.20) 0%,transparent 60%);pointer-events:none;"></div>
+    <div style="position:relative;z-index:2;max-width:700px;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:var(--amarillo);color:var(--oscuro);padding:6px 16px;border-radius:50px;font-weight:800;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:20px;border:2px solid rgba(255,255,255,0.3);box-shadow:3px 3px 0 rgba(0,0,0,0.2);">🎭 Registro Gratuito</div>
+      <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4.5vw,3.5rem);font-weight:900;line-height:1.1;color:#fff;margin-bottom:14px;">Registra tu perfil<br><span style="color:var(--amarillo);">de artista</span></h1>
+      <p style="font-size:1.05rem;color:rgba(255,255,255,0.80);line-height:1.65;max-width:560px;">Únete a más de 320 artistas que ya hacen parte de la plataforma y conecta con nuevas oportunidades todo el año.</p>
+    </div>
+  </div>
+  <div class="stripe-divider"></div>
+
+  <section style="padding:70px 5%;">
+    <div class="registro-layout">
+      <!-- STEPS sidebar -->
+      <div class="registro-steps fade-in-left">
+        <div style="margin-bottom:28px;">
+          <div class="section-tag">Proceso de Registro</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;line-height:1.2;">4 pasos simples para unirte</h3>
+        </div>
+        <div class="step-list" id="stepList">
+          <div class="step-item current"><div class="step-num">1</div><div class="step-text"><strong>Categoría Artística</strong><span>¿Qué tipo de artista eres?</span></div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Información Personal</strong><span>Nombre, foto y contacto</span></div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Experiencia & Talentos</strong><span>Tu trayectoria y habilidades</span></div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Confirmar Registro</strong><span>Revisión y publicación</span></div></div>
+        </div>
+
+        <div style="margin-top:40px;background:var(--gris-claro);border-radius:18px;padding:20px;border:2px solid rgba(26,18,16,0.08);">
+          <div style="font-weight:800;font-size:0.85rem;margin-bottom:12px;color:var(--oscuro);">✅ Beneficios de Registrarte</div>
+          <div class="benefit-item"><span style="color:var(--rojo);">●</span> Perfil visible a miles de visitantes</div>
+          <div class="benefit-item"><span style="color:var(--azul);">●</span> Conexión con empresas y eventos</div>
+          <div class="benefit-item"><span style="color:var(--naranja);">●</span> Acceso a cursos y talleres</div>
+          <div class="benefit-item"><span style="color:var(--amarillo);filter:brightness(0.7);">●</span> Difusión en redes sociales</div>
+          <div class="benefit-item"><span style="color:var(--rojo);">●</span> 100% gratuito</div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="registro-form fade-in-right">
+        <div style="padding:24px 36px 0;">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:25%;"></div></div>
+          <div style="font-size:0.82rem;color:var(--gris);font-weight:700;margin-bottom:4px;" id="stepLabel">Paso 1 de 4</div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div class="registro-step-form active" id="rform-1">
+          <h3>Categoría Artística</h3>
+          <p class="form-hint">Selecciona la categoría que mejor describe tu arte</p>
+          <div class="cat-select-grid">
+            <div class="cat-select-item" onclick="selectCat(this,'musico')"><div class="cat-icon">🎷</div><div class="cat-info"><strong>Músico</strong><span>Gaita, cumbia, porro, vallenato...</span></div></div>
+            <div class="cat-select-item" onclick="selectCat(this,'bailarin')"><div class="cat-icon">💃</div><div class="cat-info"><strong>Bailarín / Coreógrafo</strong><span>Mapalé, cumbia, congo...</span></div></div>
+            <div class="cat-select-item" onclick="selectCat(this,'artesano')"><div class="cat-icon">🎨</div><div class="cat-info"><strong>Artesano</strong><span>Máscaras, tejidos, joyería...</span></div></div>
+            <div class="cat-select-item" onclick="selectCat(this,'gestor')"><div class="cat-icon">🎭</div><div class="cat-info"><strong>Gestor Cultural</strong><span>Producción, curaduría...</span></div></div>
+          </div>
+          <div class="form-group">
+            <label>Subcategoría o especialidad (opcional)</label>
+            <input class="form-input" type="text" placeholder="Ej: Gaita hembra, Danza afrocolombiana, Máscara de carnaval...">
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="registro-step-form" id="rform-2">
+          <h3>Información Personal</h3>
+          <p class="form-hint">Esta información será visible en tu perfil público</p>
+          <div class="avatar-upload">
+            <div class="avatar-preview">🎭</div>
+            <div><button class="upload-btn">📷 Subir foto de perfil</button><p style="font-size:0.78rem;color:var(--gris);margin-top:6px;">JPG o PNG · Máx. 5MB</p></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Nombre</label><input class="form-input" type="text" placeholder="Tu nombre"></div>
+            <div class="form-group"><label>Apellido</label><input class="form-input" type="text" placeholder="Tu apellido"></div>
+          </div>
+          <div class="form-group"><label>Correo electrónico</label><input class="form-input" type="email" placeholder="tu@correo.com"></div>
+          <div class="form-group"><label>Teléfono / WhatsApp</label><input class="form-input" type="tel" placeholder="+57 3XX XXX XXXX"></div>
+          <div class="form-group"><label>Barrio o Municipio</label><input class="form-input" type="text" placeholder="Ej: Barranquilla, Soledad, Malambo..."></div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="registro-step-form" id="rform-3">
+          <h3>Experiencia & Talentos</h3>
+          <p class="form-hint">Cuéntanos sobre tu trayectoria y habilidades</p>
+          <div class="form-group">
+            <label>Años de experiencia</label>
+            <select class="form-select">
+              <option>Menos de 1 año</option>
+              <option>1 a 3 años</option>
+              <option>3 a 5 años</option>
+              <option>5 a 10 años</option>
+              <option>Más de 10 años</option>
+              <option>Más de 20 años</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Descripción de tu trabajo</label>
+            <textarea class="form-textarea" placeholder="Describe tu arte, tu experiencia y lo que ofreces. Este texto aparecerá en tu perfil público..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>¿Para qué tipo de eventos estás disponible?</label>
+            <div class="skill-chips">
+              <button class="skill-chip" onclick="toggleChip(this)">Eventos corporativos</button>
+              <button class="skill-chip" onclick="toggleChip(this)">Festivales</button>
+              <button class="skill-chip" onclick="toggleChip(this)">Bodas & celebraciones</button>
+              <button class="skill-chip" onclick="toggleChip(this)">Talleres educativos</button>
+              <button class="skill-chip" onclick="toggleChip(this)">Turismo cultural</button>
+              <button class="skill-chip" onclick="toggleChip(this)">Exportaciones</button>
+              <button class="skill-chip" onclick="toggleChip(this)">Grabaciones</button>
+              <button class="skill-chip" onclick="toggleChip(this)">Shows nocturnos</button>
+            </div>
+          </div>
+          <div class="form-group"><label>Enlace de redes sociales o portafolio (opcional)</label><input class="form-input" type="url" placeholder="https://instagram.com/tuusuario"></div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="registro-step-form" id="rform-4">
+          <h3>Revisar y Confirmar</h3>
+          <p class="form-hint">Antes de publicar tu perfil, confirma la siguiente información</p>
+          <div style="background:var(--gris-claro);border-radius:16px;padding:22px;border:2px solid rgba(26,18,16,0.1);margin-bottom:20px;">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+              <div style="font-size:3rem;">🎭</div>
+              <div>
+                <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:900;">Tu Perfil Público</div>
+                <div style="font-size:0.82rem;color:var(--gris);margin-top:2px;">Así te verán los visitantes de la plataforma</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="padding:4px 12px;border-radius:50px;background:var(--rojo);color:#fff;font-size:0.74rem;font-weight:800;">Artista</span>
+              <span style="padding:4px 12px;border-radius:50px;background:var(--amarillo);color:var(--oscuro);font-size:0.74rem;font-weight:800;">Barranquilla</span>
+              <span style="padding:4px 12px;border-radius:50px;background:rgba(26,18,16,0.08);font-size:0.74rem;font-weight:700;">Carnaval</span>
+            </div>
+          </div>
+          <div class="form-group" style="display:flex;align-items:flex-start;gap:12px;">
+            <input type="checkbox" id="terms" style="margin-top:4px;width:18px;height:18px;cursor:pointer;">
+            <label for="terms" style="font-weight:600;font-size:0.9rem;cursor:pointer;line-height:1.5;">Acepto los <a href="#" style="color:var(--azul);font-weight:800;">Términos y Condiciones</a> y la <a href="#" style="color:var(--azul);font-weight:800;">Política de Privacidad</a> de Alma Barranquillera.</label>
+          </div>
+          <div class="form-group" style="display:flex;align-items:flex-start;gap:12px;">
+            <input type="checkbox" id="newsletter" style="margin-top:4px;width:18px;height:18px;cursor:pointer;" checked>
+            <label for="newsletter" style="font-weight:600;font-size:0.9rem;cursor:pointer;line-height:1.5;">Quiero recibir noticias, oportunidades y convocatorias culturales.</label>
+          </div>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="registro-success" id="rform-success">
+          <div class="success-confetti">🎉🎭🎊</div>
+          <h3>¡Bienvenido a la familia!</h3>
+          <p>Tu perfil ha sido enviado para revisión. En máximo 48 horas recibirás un correo de confirmación y tu perfil estará visible en la plataforma.</p>
+          <div class="benefits-list">
+            <div class="benefit-item">✅ Perfil enviado para revisión</div>
+            <div class="benefit-item">📧 Correo de confirmación enviado</div>
+            <div class="benefit-item">👀 Visible en 48 horas</div>
+            <div class="benefit-item">🤝 Equipo de soporte disponible</div>
+          </div>
+          <button class="btn-primary" onclick="navigate('talento')">🔍 Explorar otros artistas</button>
+        </div>
+
+        <!-- Navigation -->
+        <div class="form-nav" id="formNav">
+          <span class="step-progress" id="stepProgress">Paso 1 de 4</span>
+          <div style="display:flex;gap:12px;">
+            <button class="btn-secondary" id="prevStepBtn" onclick="prevStep()" style="display:none;padding:10px 22px;font-size:0.9rem;">← Anterior</button>
+            <button class="btn-primary" id="nextStepBtn" onclick="nextStep()" style="padding:10px 22px;font-size:0.9rem;">Siguiente →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="logo-mark" style="margin-bottom:16px;">🎭</div><div style="font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px;">Alma Barranquillera</div><p>Plataforma digital que conecta a los actores culturales del Carnaval de Barranquilla con el mundo.</p></div>
+      <div><h4>Plataforma</h4><ul><li><button onclick="navigate('talento')">Explorar Talento</button></li><li><button onclick="navigate('eventos')">Eventos</button></li><li><button onclick="navigate('aprende')">Aprende</button></li></ul></div>
+      <div><h4>Información</h4><ul><li><button onclick="navigate('contacto')">Contacto</button></li></ul></div>
+      <div class="footer-contact"><h4>Contacto</h4><p><strong>📧</strong> hola@almabarranquillera.co</p></div>
+    </div>
+    <div class="footer-bottom"><p>© 2025 Alma Barranquillera · Todos los derechos reservados</p></div>
+  </footer>
+</div>
+
+<script>
+// ─── NAVIGATION ───
+const pages = ['home','talento','eventos','aprende','contacto','registro'];
+let currentPage = 'home';
+let registroStep = 1;
+
+function navigate(page) {
+  const prev = document.getElementById('page-' + currentPage);
+  if (prev) {
+    prev.style.opacity = '0';
+    prev.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+      prev.classList.remove('active');
+      prev.style.opacity = '';
+      prev.style.transform = '';
+    }, 200);
+  }
+  currentPage = page;
+  setTimeout(() => {
+    const next = document.getElementById('page-' + page);
+    if (next) {
+      next.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Trigger animations
+      setTimeout(() => {
+        next.querySelectorAll('.fade-in:not(.visible), .fade-in-left:not(.visible), .fade-in-right:not(.visible)').forEach(el => {
+          el.classList.add('visible');
+        });
+        triggerCounters(next);
+      }, 150);
+    }
+    // Update nav highlight
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active-nav'));
+    const navEl = document.getElementById('nav-' + page);
+    if (navEl) navEl.classList.add('active-nav');
+  }, 200);
+}
+
+// ─── NAV SCROLL ───
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+// ─── MOBILE MENU ───
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// ─── SCROLL ANIMATIONS (initial page) ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      if (e.target.classList.contains('impacto-card')) {
+        const num = e.target.querySelector('.impacto-num');
+        if (num && !num.dataset.animated) {
+          num.dataset.animated = '1';
+          animateCounter(num, parseInt(num.dataset.target));
+        }
+      }
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .impacto-card').forEach(el => observer.observe(el));
+
+function triggerCounters(container) {
+  container.querySelectorAll('.impacto-num').forEach(num => {
+    if (!num.dataset.animated) {
+      num.dataset.animated = '1';
+      animateCounter(num, parseInt(num.dataset.target));
+    }
+  });
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCounter(el, target) {
+  let start = 0;
+  const duration = 1800;
+  const step = (timestamp) => {
+    if (!start) start = timestamp;
+    const progress = Math.min((timestamp - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(eased * target).toLocaleString('es-CO');
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target.toLocaleString('es-CO') + (target >= 100 ? '+' : '');
+  };
+  requestAnimationFrame(step);
+}
+
+// ─── FILTER TALENT CARDS ───
+function filterCards(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    if (b.closest('#page-talento') || b.closest('#page-home')) b.classList.remove('active');
+  });
+  btn.classList.add('active');
+  document.querySelectorAll('#cardsGrid .talent-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+  });
+}
+
+function filterTalent() {
+  const q = document.getElementById('talentSearch').value.toLowerCase();
+  document.querySelectorAll('#cardsGrid .talent-card').forEach(card => {
+    const name = card.dataset.name || '';
+    card.style.display = name.includes(q) ? '' : 'none';
+  });
+}
+
+// ─── FILTER EVENTS ───
+function filterEvents(cat, btn) {
+  document.querySelectorAll('#eventsGrid').forEach(grid => {
+    grid.closest('section').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  });
+  btn.classList.add('active');
+  document.querySelectorAll('#eventsGrid .event-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.ecat === cat) ? '' : 'none';
+  });
+}
+
+// ─── FILTER ARTICLES ───
+function filterArticles(cat, btn) {
+  document.querySelectorAll('#tab-articulos .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#articlesGrid .article-card').forEach(card => {
+    card.style.display = (cat === 'all' || card.dataset.atag === cat) ? '' : 'none';
+  });
+}
+
+// ─── TABS (Aprende) ───
+function switchTab(tab, btn) {
+  document.querySelectorAll('.aprende-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.aprende-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// ─── CAROUSEL ───
+let carPos = 0;
+function moveCarousel(dir) {
+  const track = document.getElementById('testimTrack');
+  if (!track) return;
+  const cards = track.querySelectorAll('.testimonio-card');
+  const cardW = cards[0].offsetWidth + 22;
+  const maxPos = (cards.length - Math.floor(track.parentElement.offsetWidth / cardW)) * cardW;
+  carPos = Math.max(0, Math.min(carPos + dir * cardW, maxPos));
+  track.style.transform = `translateX(-${carPos}px)`;
+}
+
+// ─── ARTIST MODAL ───
+const artistData = {
+  carlos:  { name:'Carlos Insignares', role:'Músico de Gaita · Barranquilla', avatar:'🎷', bio:'Maestro gaitero con 25 años de carrera. Ha representado a Colombia en festivales de España, México y Francia. Disponible para eventos corporativos, festivales y talleres.', tags:['Gaita colombiana','Cumbia','Porro','Marimonda','Festivales internacionales'], stats:[{v:'25',l:'Años exp.'},{v:'87',l:'Reseñas'},{v:'4.9',l:'Calificación'}] },
+  mariana: { name:'Mariana Pedroza', role:'Bailarina · Congo Grande', avatar:'💃', bio:'Coreógrafa y bailarina del Congo Grande con más de 15 años de experiencia. Ha formado a más de 500 estudiantes en la técnica de la danza caribeña.', tags:['Cumbia','Congo','Mapalé','Coreografía','Talleres turísticos'], stats:[{v:'15',l:'Años exp.'},{v:'64',l:'Reseñas'},{v:'5.0',l:'Calificación'}] },
+  luis:    { name:'Luis Camacho', role:'Artesano · Máscaras del Carnaval', avatar:'🎨', bio:'Artesano especialista en máscaras y disfraces del Carnaval. Sus obras han sido exportadas a España, México y Estados Unidos. Ofrece talleres y trabajos por encargo.', tags:['Máscaras','Disfraces','Exportación','Talleres','Arte popular'], stats:[{v:'18',l:'Años exp.'},{v:'120',l:'Reseñas'},{v:'4.8',l:'Calificación'}] },
+  rosa:    { name:'Rosa Turbay', role:'Gestora Cultural · Barranquilla', avatar:'🎭', bio:'Gestora y productora cultural con amplia experiencia en eventos de gran formato. Especialista en turismo cultural y rutas del Carnaval de Barranquilla.', tags:['Producción cultural','Turismo','Rutas del Carnaval','Gestión de eventos'], stats:[{v:'12',l:'Años exp.'},{v:'55',l:'Reseñas'},{v:'4.9',l:'Calificación'}] },
+  andres:  { name:'Andrés Palomino', role:'Percusionista · Barranquilla', avatar:'🥁', bio:'Director de agrupación de mapalé y percusionista de cumbia. Ofrece grupos desde 5 hasta 20 músicos para cualquier tipo de evento.', tags:['Percusión','Mapalé','Cumbia','Grupos musicales','Festivales'], stats:[{v:'10',l:'Años exp.'},{v:'43',l:'Reseñas'},{v:'4.7',l:'Calificación'}] },
+  patricia:{ name:'Patricia Villareal', role:'Artesana · Vestuario Típico', avatar:'🧵', bio:'Diseñadora y tejedora de vestuario típico del Carnaval. Crea polleras, tocados y accesorios para comparsas, danzas y eventos culturales.', tags:['Vestuario típico','Polleras','Tocados','Comparsas','Tejidos'], stats:[{v:'20',l:'Años exp.'},{v:'98',l:'Reseñas'},{v:'4.9',l:'Calificación'}] },
+  jesus:   { name:'Jesús Orozco', role:'Bailarín · Danzas Afrocolombianas', avatar:'🕺', bio:'Especialista en danzas afrocolombianas y mapalé. Ha participado en festivales internacionales y ofrece formación profesional en su academia.', tags:['Mapalé','Danzas afrocolombianas','Formación','Festivales internacionales'], stats:[{v:'14',l:'Años exp.'},{v:'71',l:'Reseñas'},{v:'4.8',l:'Calificación'}] },
+  claudia: { name:'Claudia Pertuz', role:'Gestora Cultural · Turismo', avatar:'📋', bio:'Productora de eventos y gestora especializada en turismo cultural. Ha organizado rutas del Carnaval para visitantes de más de 20 países.', tags:['Turismo cultural','Rutas del Carnaval','Producción','Relaciones internacionales'], stats:[{v:'8',l:'Años exp.'},{v:'39',l:'Reseñas'},{v:'5.0',l:'Calificación'}] },
+};
+function openArtist(key) {
+  const d = artistData[key];
+  if (!d) return;
+  document.getElementById('m-avatar').textContent = d.avatar;
+  document.getElementById('m-name').textContent = d.name;
+  document.getElementById('m-role').textContent = d.role;
+  document.getElementById('m-bio').textContent = d.bio;
+  document.getElementById('m-tags').innerHTML = d.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
+  document.getElementById('m-stats').innerHTML = d.stats.map(s => `<div class="modal-stat"><strong>${s.v}</strong><span>${s.l}</span></div>`).join('');
+  document.getElementById('artistModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) { if (e.target === document.getElementById('artistModal')) closeModalBtn(); }
+function closeModalBtn() {
+  document.getElementById('artistModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─── CONTACT FORM ───
+function submitContact() {
+  document.getElementById('contactFormWrap').style.display = 'none';
+  document.getElementById('contactSuccess').style.display = 'block';
+}
+function resetContact() {
+  document.getElementById('contactFormWrap').style.display = 'block';
+  document.getElementById('contactSuccess').style.display = 'none';
+}
+
+// ─── FAQ ───
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// ─── REGISTRO STEPS ───
+function updateStepUI() {
+  const steps = document.querySelectorAll('#stepList .step-item');
+  steps.forEach((s, i) => {
+    s.classList.remove('current','done');
+    if (i + 1 < registroStep) s.classList.add('done');
+    if (i + 1 === registroStep) s.classList.add('current');
+  });
+  document.querySelectorAll('.registro-step-form').forEach((f, i) => {
+    f.classList.toggle('active', i + 1 === registroStep);
+  });
+  const pct = (registroStep / 4) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  const label = `Paso ${registroStep} de 4`;
+  document.getElementById('stepLabel').textContent = label;
+  if (document.getElementById('stepProgress')) document.getElementById('stepProgress').textContent = label;
+  document.getElementById('prevStepBtn').style.display = registroStep > 1 ? '' : 'none';
+  document.getElementById('nextStepBtn').textContent = registroStep === 4 ? '🎭 Registrarme Gratis' : 'Siguiente →';
+}
+function nextStep() {
+  if (registroStep < 4) { registroStep++; updateStepUI(); }
+  else {
+    document.querySelectorAll('.registro-step-form').forEach(f => f.classList.remove('active'));
+    document.getElementById('rform-success').classList.add('active');
+    document.getElementById('formNav').style.display = 'none';
+    document.querySelectorAll('#stepList .step-item').forEach(s => { s.classList.remove('current'); s.classList.add('done'); });
+  }
+}
+function prevStep() {
+  if (registroStep > 1) { registroStep--; updateStepUI(); }
+}
+function selectCat(el, cat) {
+  document.querySelectorAll('.cat-select-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function toggleChip(el) { el.classList.toggle('selected'); }
+
+// ─── STAGGER DELAYS ───
+document.querySelectorAll('.cards-grid .talent-card').forEach((card, i) => { card.style.transitionDelay = `${i * 0.07}s`; });
+document.querySelectorAll('.events-grid .event-card').forEach((card, i) => { card.style.transitionDelay = `${i * 0.06}s`; });
+</script>
+</body>
+</html>
+

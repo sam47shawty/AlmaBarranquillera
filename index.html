@@ -187,7 +187,7 @@
   .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 24px; }
   .talent-card {
     background: #fff; border: 2.5px solid var(--oscuro);
-    border-radius: 20px; overflow: hidden;
+    border-radius: 20px;
     box-shadow: 5px 5px 0 var(--oscuro);
     transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
   }
@@ -218,7 +218,7 @@
 
   /* ─── EVENTS ─── */
   .events-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 22px; }
-  .event-card { background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.15); border-radius: 20px; overflow: hidden; transition: transform 0.25s, border-color 0.25s; }
+  .event-card { background: rgba(255,255,255,0.06); border: 2px solid rgba(255,255,255,0.15); border-radius: 20px; transition: transform 0.25s, border-color 0.25s; }
   .event-card:hover { transform: translateY(-6px); border-color: var(--amarillo); }
   .event-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: #2a2020; }
   .event-body { padding: 20px; }
@@ -232,7 +232,7 @@
   .btn-event:hover { text-decoration: underline; }
 
   /* ─── TESTIMONIOS ─── */
-  .testimonios-wrap { overflow: hidden; position: relative; }
+  .testimonios-wrap {position: relative; }
   .testimonios-track { display: flex; gap: 22px; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
   .testimonio-card {
     min-width: 340px; flex-shrink: 0;
@@ -267,7 +267,7 @@
   /* ─── IMPACTO ─── */
   .impacto-section {
     background: linear-gradient(135deg, var(--azul) 0%, #0d3278 100%);
-    position: relative; overflow: hidden;
+    position: relative;
   }
   .impacto-section::before {
     content: ''; position: absolute; inset: 0;
@@ -1770,4 +1770,5 @@ document.querySelectorAll('.events-grid .event-card').forEach((card, i) => { car
 </script>
 </body>
 </html>
+
 

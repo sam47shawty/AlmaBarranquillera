@@ -22,7 +22,7 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Nunito', sans-serif; background: var(--fondo); color: var(--oscuro); overflow-x: hidden; }
+  body { font-family: 'Nunito', sans-serif; background: var(--fondo); color: var(--oscuro); }
 
   /* ─── PAGE TRANSITIONS ─── */
   .page { display: none; opacity: 0; transform: translateY(18px); transition: opacity 0.45s ease, transform 0.45s ease; }
@@ -323,7 +323,7 @@
     padding-top: 72px; min-height: 38vh;
     display: flex; flex-direction: column; justify-content: flex-end;
     padding-inline: 5%; padding-bottom: 60px;
-    position: relative; overflow: hidden;
+    position: relative;
   }
   .page-hero::before {
     content: ''; position: absolute; inset: 0;
@@ -388,7 +388,7 @@
   .modal-box {
     background: var(--fondo); border-radius: 24px;
     border: 3px solid var(--oscuro); box-shadow: 10px 10px 0 var(--oscuro);
-    max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto;
+    max-width: 560px; width: 100%; max-height: 90vh;
     animation: modalIn 0.3s ease;
   }
   @keyframes modalIn { from { opacity: 0; transform: scale(0.93) translateY(20px); } to { opacity: 1; transform: none; } }
@@ -443,7 +443,7 @@
   .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
   .article-card {
     background: #fff; border: 2px solid var(--oscuro);
-    border-radius: 20px; overflow: hidden;
+    border-radius: 20px;
     box-shadow: 5px 5px 0 var(--oscuro);
     transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
   }
@@ -466,7 +466,7 @@
 
   .cursos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
   .curso-card {
-    background: var(--oscuro); border-radius: 20px; overflow: hidden;
+    background: var(--oscuro); border-radius: 20px; : hidden;
     border: 2px solid rgba(255,255,255,0.08);
     transition: transform 0.25s;
   }
@@ -521,7 +521,7 @@
   .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 700; color: var(--oscuro); }
   .faq-icon { font-size: 1.2rem; transition: transform 0.3s; }
   .faq-item.open .faq-icon { transform: rotate(45deg); }
-  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; }
+  .faq-a { max-height: 0; transition: max-height 0.4s ease, padding 0.3s; }
   .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
   .faq-a p { font-size: 0.95rem; color: var(--gris); line-height: 1.7; }
 
@@ -539,7 +539,7 @@
   .step-text span { font-size: 0.78rem; color: var(--gris); }
   .step-item.current .step-text span { color: rgba(26,18,16,0.6); }
 
-  .registro-form { background: #fff; border: 2.5px solid var(--oscuro); border-radius: 24px; box-shadow: 8px 8px 0 var(--oscuro); overflow: hidden; }
+  .registro-form { background: #fff; border: 2.5px solid var(--oscuro); border-radius: 24px; box-shadow: 8px 8px 0 var(--oscuro); }
   .registro-step-form { display: none; padding: 36px; }
   .registro-step-form.active { display: block; animation: fadeUp 0.35s ease; }
   .registro-step-form h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 6px; }
@@ -557,7 +557,7 @@
   .skill-chip:hover:not(.selected) { background: var(--amarillo); }
   .form-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 36px; background: var(--gris-claro); border-top: 2px solid rgba(26,18,16,0.08); }
   .step-progress { font-size: 0.85rem; font-weight: 700; color: var(--gris); }
-  .progress-bar { height: 6px; background: rgba(26,18,16,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 16px; }
+  .progress-bar { height: 6px; background: rgba(26,18,16,0.1); border-radius: 3px; margin-bottom: 16px; }
   .progress-fill { height: 100%; background: linear-gradient(90deg, var(--rojo), var(--naranja)); border-radius: 3px; transition: width 0.4s ease; }
   .avatar-upload { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; }
   .avatar-preview { width: 80px; height: 80px; border-radius: 50%; background: var(--gris-claro); border: 3px solid var(--oscuro); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; box-shadow: 4px 4px 0 var(--oscuro); }
@@ -577,7 +577,7 @@
     min-height: 100vh; padding-top: 72px;
     display: grid; grid-template-columns: 1fr 1fr;
     align-items: center; gap: 40px; padding-inline: 5%;
-    overflow: hidden; position: relative; background: var(--fondo);
+    position: relative; background: var(--fondo);
   }
   #inicio::before {
     content: ''; position: absolute; inset: 0;
@@ -605,7 +605,7 @@
   .hstat strong { display: block; font-family: 'Playfair Display', serif; font-size: 1.9rem; color: var(--azul); }
   .hstat span { font-size: 0.8rem; font-weight: 700; color: var(--gris); text-transform: uppercase; letter-spacing: 0.04em; }
   .hero-visual { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .hero-card { border-radius: 20px; overflow: hidden; position: relative; aspect-ratio: 3/4; background: var(--gris-claro); border: 3px solid var(--oscuro); box-shadow: 6px 6px 0 var(--oscuro); transition: transform 0.3s; }
+  .hero-card { border-radius: 20px; position: relative; aspect-ratio: 3/4; background: var(--gris-claro); border: 3px solid var(--oscuro); box-shadow: 6px 6px 0 var(--oscuro); transition: transform 0.3s; }
   .hero-card:hover { transform: translate(-4px,-4px); }
   .hero-card:nth-child(2) { margin-top: 40px; }
   .hero-card .card-label { position: absolute; bottom: 12px; left: 12px; right: 12px; background: rgba(26,18,16,0.82); color: #fff; padding: 8px 12px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; backdrop-filter: blur(6px); }
@@ -614,9 +614,9 @@
   /* ─── CULTURA (INDEX) ─── */
   .cultura-section { background: var(--gris-claro); }
   .cultura-grid { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: auto auto; gap: 22px; }
-  .cultura-featured { grid-row: 1 / 3; border-radius: 20px; overflow: hidden; background: #fff; border: 2.5px solid var(--oscuro); box-shadow: 6px 6px 0 var(--oscuro); transition: transform 0.25s; }
+  .cultura-featured { grid-row: 1 / 3; border-radius: 20px; background: #fff; border: 2.5px solid var(--oscuro); box-shadow: 6px 6px 0 var(--oscuro); transition: transform 0.25s; }
   .cultura-featured:hover { transform: translate(-4px,-4px); }
-  .cultura-item { border-radius: 16px; overflow: hidden; background: #fff; border: 2px solid var(--oscuro); box-shadow: 4px 4px 0 var(--oscuro); transition: transform 0.25s; }
+  .cultura-item { border-radius: 16px; background: #fff; border: 2px solid var(--oscuro); box-shadow: 4px 4px 0 var(--oscuro); transition: transform 0.25s; }
   .cultura-item:hover { transform: translate(-3px,-3px); }
   .ci-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; background: var(--gris-claro); }
   .ci-body { padding: 16px; }
@@ -916,7 +916,7 @@
      PÁGINA: EXPLORAR TALENTO
 ════════════════════════════════════════════ -->
 <div class="page" id="page-talento">
-  <div class="page-hero confetti-bg" style="padding-top:72px;min-height:36vh;display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+  <div class="page-hero confetti-bg" style="padding-top:72px;min-height:36vh;display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;">
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,196,0,0.18) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 15% 70%,rgba(244,121,32,0.12) 0%,transparent 50%);pointer-events:none;"></div>
     <div style="position:relative;z-index:2;max-width:700px;">
       <div class="hero-badge">🎭 +320 Artistas</div>
@@ -1028,7 +1028,7 @@
      PÁGINA: EVENTOS CULTURALES
 ════════════════════════════════════════════ -->
 <div class="page" id="page-eventos">
-  <div style="padding-top:72px;min-height:38vh;background:var(--oscuro);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+  <div style="padding-top:72px;min-height:38vh;background:var(--oscuro);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;">
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,196,0,0.12) 0%,transparent 60%);pointer-events:none;"></div>
     <div style="position:relative;z-index:2;max-width:700px;">
       <div style="display:inline-flex;align-items:center;gap:8px;background:var(--amarillo);color:var(--oscuro);padding:6px 16px;border-radius:50px;font-weight:800;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:20px;border:2px solid rgba(255,255,255,0.2);box-shadow:3px 3px 0 rgba(255,255,255,0.3);">📅 Agenda 2025–2026</div>
@@ -1119,7 +1119,7 @@
      PÁGINA: APRENDE
 ════════════════════════════════════════════ -->
 <div class="page" id="page-aprende">
-  <div style="padding-top:72px;min-height:38vh;background:var(--azul);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+  <div style="padding-top:72px;min-height:38vh;background:var(--azul);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;">
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 40%,rgba(245,196,0,0.15) 0%,transparent 60%);pointer-events:none;"></div>
     <div style="position:relative;z-index:2;max-width:700px;">
       <div style="display:inline-flex;align-items:center;gap:8px;background:var(--amarillo);color:var(--oscuro);padding:6px 16px;border-radius:50px;font-weight:800;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:20px;border:2px solid rgba(255,255,255,0.3);box-shadow:3px 3px 0 rgba(245,196,0,0.4);">📚 UNESCO Patrimonio</div>
@@ -1237,7 +1237,7 @@
      PÁGINA: CONTACTO
 ════════════════════════════════════════════ -->
 <div class="page" id="page-contacto">
-  <div class="page-hero confetti-bg" style="padding-top:72px;min-height:36vh;display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+  <div class="page-hero confetti-bg" style="padding-top:72px;min-height:36vh;display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;">
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(245,196,0,0.18) 0%,transparent 60%),radial-gradient(ellipse 40% 60% at 15% 70%,rgba(244,121,32,0.12) 0%,transparent 50%);pointer-events:none;"></div>
     <div style="position:relative;z-index:2;max-width:700px;">
       <div class="hero-badge">📩 Estamos aquí para ayudarte</div>
@@ -1356,7 +1356,7 @@
      PÁGINA: REGISTRAR ARTISTA
 ════════════════════════════════════════════ -->
 <div class="page" id="page-registro">
-  <div style="padding-top:72px;min-height:38vh;background:linear-gradient(135deg,var(--rojo),#b02820);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;overflow:hidden;">
+  <div style="padding-top:72px;min-height:38vh;background:linear-gradient(135deg,var(--rojo),#b02820);display:flex;flex-direction:column;justify-content:flex-end;padding-inline:5%;padding-bottom:50px;position:relative;">
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 40%,rgba(245,196,0,0.20) 0%,transparent 60%);pointer-events:none;"></div>
     <div style="position:relative;z-index:2;max-width:700px;">
       <div style="display:inline-flex;align-items:center;gap:8px;background:var(--amarillo);color:var(--oscuro);padding:6px 16px;border-radius:50px;font-weight:800;font-size:0.78rem;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:20px;border:2px solid rgba(255,255,255,0.3);box-shadow:3px 3px 0 rgba(0,0,0,0.2);">🎭 Registro Gratuito</div>
@@ -1701,12 +1701,10 @@ function openArtist(key) {
   document.getElementById('m-tags').innerHTML = d.tags.map(t => `<span class="modal-tag">${t}</span>`).join('');
   document.getElementById('m-stats').innerHTML = d.stats.map(s => `<div class="modal-stat"><strong>${s.v}</strong><span>${s.l}</span></div>`).join('');
   document.getElementById('artistModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
 }
 function closeModal(e) { if (e.target === document.getElementById('artistModal')) closeModalBtn(); }
 function closeModalBtn() {
   document.getElementById('artistModal').classList.remove('open');
-  document.body.style.overflow = '';
 }
 
 // ─── CONTACT FORM ───
@@ -1770,5 +1768,4 @@ document.querySelectorAll('.events-grid .event-card').forEach((card, i) => { car
 </script>
 </body>
 </html>
-
 

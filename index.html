@@ -22,7 +22,7 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-  body { font-family: 'Nunito', sans-serif; background: var(--fondo); color: var(--oscuro); }
+  body { font-family: 'Nunito', sans-serif; background: var(--fondo); color: var(--oscuro); overflow-x: hidden; }
 
   /* ─── PAGE TRANSITIONS ─── */
   .page { display: none; opacity: 0; transform: translateY(18px); transition: opacity 0.45s ease, transform 0.45s ease; }
@@ -323,7 +323,7 @@
     padding-top: 72px; min-height: 38vh;
     display: flex; flex-direction: column; justify-content: flex-end;
     padding-inline: 5%; padding-bottom: 60px;
-    position: relative;
+    position: relative; overflow: hidden;
   }
   .page-hero::before {
     content: ''; position: absolute; inset: 0;
@@ -388,7 +388,7 @@
   .modal-box {
     background: var(--fondo); border-radius: 24px;
     border: 3px solid var(--oscuro); box-shadow: 10px 10px 0 var(--oscuro);
-    max-width: 560px; width: 100%; max-height: 90vh;
+    max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto;
     animation: modalIn 0.3s ease;
   }
   @keyframes modalIn { from { opacity: 0; transform: scale(0.93) translateY(20px); } to { opacity: 1; transform: none; } }
@@ -443,7 +443,7 @@
   .articles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
   .article-card {
     background: #fff; border: 2px solid var(--oscuro);
-    border-radius: 20px;
+    border-radius: 20px; overflow: hidden;
     box-shadow: 5px 5px 0 var(--oscuro);
     transition: transform 0.25s, box-shadow 0.25s; cursor: pointer;
   }
@@ -466,7 +466,7 @@
 
   .cursos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; }
   .curso-card {
-    background: var(--oscuro); border-radius: 20px; : hidden;
+    background: var(--oscuro); border-radius: 20px; overflow: hidden;
     border: 2px solid rgba(255,255,255,0.08);
     transition: transform 0.25s;
   }
@@ -1768,4 +1768,3 @@ document.querySelectorAll('.events-grid .event-card').forEach((card, i) => { car
 </script>
 </body>
 </html>
-
